@@ -5,18 +5,18 @@ using UnityEngine.UI;
 
 public class SettingsUI : MonoBehaviour
 {
-    // [SerializeField]
-    // private Button MouseControllButton;
-    // [SerializeField]
-    // private Button KeyboardMouseControllButton;
-    // [SerializeField]
-    // private Button JoyStickButton;
-    // private Animator animator;
+    [SerializeField]
+    private Button MouseControllButton;
+    [SerializeField]
+    private Button KeyboardMouseControllButton;
+    [SerializeField]
+    private Button JoyStickButton;
+    private Animator animator;
 
-    // private void Awake()
-    // {
-    //     animator = GetComponent<Animator>();
-    // }
+    private void Awake()
+    {
+        animator = GetComponent<Animator>();
+    }
 
     // private void OnEnable()
     // {
@@ -67,16 +67,16 @@ public class SettingsUI : MonoBehaviour
     //     }
     // }
 
-    // public virtual void Close()
-    // {
-    //     StartCoroutine(CloseAfterDelay());
-    // }
+    public virtual void Close()
+    {
+        StartCoroutine(CloseAfterDelay());
+    }
 
-    // private IEnumerator CloseAfterDelay()
-    // {
-    //     animator.SetTrigger("close");
-    //     yield return new WaitForSeconds(0.5f);
-    //     gameObject.SetActive(false);
-    //     animator.ResetTrigger("close");
-    // }
+    private IEnumerator CloseAfterDelay()
+    {
+        animator.SetTrigger("close");
+        yield return new WaitForSeconds(0.5f);
+        gameObject.SetActive(false);
+        animator.ResetTrigger("close");
+    }
 }
