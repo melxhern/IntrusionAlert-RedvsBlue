@@ -262,6 +262,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 45aeac40189eb70459fda3e4c945cf67, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  MouseControllButton: {fileID: 0}
+  KeyboardMouseControllButton: {fileID: 0}
+  JoyStickButton: {fileID: 0}
 --- !u!1 &9153064732291663755
 GameObject:
   m_ObjectHideFlags: 0
@@ -1666,7 +1669,7 @@ RectTransform:
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
   m_AnchoredPosition: {x: 156, y: 75}
-  m_SizeDelta: {x: 306.5071, y: 117.03}
+  m_SizeDelta: {x: 300, y: 115}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &9153064732763193566
 CanvasRenderer:
@@ -6556,7 +6559,7 @@ GameObject:
   - component: {fileID: 9153064734085287537}
   - component: {fileID: 9153064734085287534}
   m_Layer: 5
-  m_Name: Canvas
+  m_Name: CanvasStarterMenu
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -7569,8 +7572,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: 163, y: 86}
-  m_SizeDelta: {x: 280, y: 100}
+  m_AnchoredPosition: {x: 156, y: 75}
+  m_SizeDelta: {x: 250, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &9153064734284295950
 CanvasRenderer:
