@@ -1,4 +1,5 @@
 ﻿using UnityEngine;
+using Mirror;
 #if ENABLE_INPUT_SYSTEM && STARTER_ASSETS_PACKAGES_CHECKED
 using UnityEngine.InputSystem;
 #endif
@@ -12,7 +13,7 @@ namespace StarterAssets
 #if ENABLE_INPUT_SYSTEM && STARTER_ASSETS_PACKAGES_CHECKED
     [RequireComponent(typeof(PlayerInput))]
 #endif
-    public class ThirdPersonController : MonoBehaviour
+    public class ThirdPersonController : NetworkBehaviour
     {
         [Header("Player")]
         [Tooltip("Move speed of the character in m/s")]
@@ -192,7 +193,14 @@ namespace StarterAssets
 
         private void CameraRotation()
         {
-            // if there is an input and camera position is not fixed
+            // Positionner la caméra au-dessus du personnage
+            Vector3 offset = new Vector3(0, 10f, -10f); // Ajustez la hauteur et la distance
+            CinemachineCameraTarget.transform.position = transform.position + offset;
+
+            // Fixer l'angle de la caméra pour une vue plongeante
+            CinemachineCameraTarget.transform.rotation = Quaternion.Euler(45f, 0f, 0f); // 45° vers le bas, pas de rotation latérale
+
+            /*// if there is an input and camera position is not fixed
             if (_input.look.sqrMagnitude >= _threshold && !LockCameraPosition)
             {
                 //Don't multiply mouse input by Time.deltaTime;
@@ -209,6 +217,7 @@ namespace StarterAssets
             // Cinemachine will follow this target
             CinemachineCameraTarget.transform.rotation = Quaternion.Euler(_cinemachineTargetPitch + CameraAngleOverride,
                 _cinemachineTargetYaw, 0.0f);
+            */
         }
 
         private void Move()
