@@ -77,10 +77,13 @@ public class AntivirusManager : MonoBehaviour
                 {
                     canvasText.text = $"{selectedComputer.name} est protégé. Temps restant : {Mathf.CeilToInt(timeRemaining)}s.";
                     // Rendre le bouton invisible
+                    Transform image=  antivirusMissionUI.transform.Find("start/test");
+                    image.gameObject.SetActive(true);
                     Transform button = antivirusMissionUI.transform.Find("start/ButtonAntivirus");
                     if (button != null)
                     {
                         button.gameObject.SetActive(false); // Cache le bouton
+                        
                     }
                 }
                 else
@@ -88,6 +91,8 @@ public class AntivirusManager : MonoBehaviour
                     // Retirer l'ordinateur de la liste active lorsqu'il n'est plus protégé.
                     activeAntivirus.Remove(selectedComputer);
                     canvasText.text = $"{selectedComputer.name} était protégé, mais l'antivirus a expiré.";
+                    Transform image=  antivirusMissionUI.transform.Find("start/test");
+                    image.gameObject.SetActive(false);
                     // Rendre le bouton visible
                     Transform button = antivirusMissionUI.transform.Find("start/ButtonAntivirus");
                     if (button != null)
