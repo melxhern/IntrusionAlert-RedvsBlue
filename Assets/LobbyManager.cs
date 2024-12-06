@@ -12,13 +12,25 @@ public class LobbyManager : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        if (StartGameButton == null)
+        {
+            StartGameButton = GameObject.Find("StartGameButton")?.GetComponent<Button>();
+            if (StartGameButton == null)
+            {
+                Debug.LogError("StartGameButton introuvable dans la scène !");
+                return;
+            }
+        }
+
         if (NetworkServer.active)
         {
+            Debug.Log("Le serveur est actif.");
             StartGameButton.gameObject.SetActive(true);
             StartGameButton.onClick.AddListener(StartGameClicked);
         }
         else
         {
+            Debug.Log("Le serveur n'est pas actif.");
             StartGameButton.gameObject.SetActive(false);
         }
     }

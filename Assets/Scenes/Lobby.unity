@@ -369,7 +369,7 @@ MonoBehaviour:
   m_ScaleFactor: 1
   m_ReferenceResolution: {x: 1280, y: 720}
   m_ScreenMatchMode: 0
-  m_MatchWidthOrHeight: 0
+  m_MatchWidthOrHeight: 1
   m_PhysicalUnit: 3
   m_FallbackScreenDPI: 96
   m_DefaultSpriteDPI: 96
@@ -442,7 +442,7 @@ MonoBehaviour:
   MaximizeSocketBuffers: 1
   ReliableMaxMessageSize: 297433
   UnreliableMaxMessageSize: 1194
-  debugLog: 0
+  debugLog: 1
   statisticsGUI: 0
   statisticsLog: 0
 --- !u!114 &492999191
@@ -476,7 +476,7 @@ MonoBehaviour:
   headlessStartMode: 0
   editorAutoStart: 0
   sendRate: 60
-  offlineScene: Assets/Scenes/WaitingRoom(Offline).unity
+  offlineScene: Assets/Scenes/StarterMenu.unity
   onlineScene: Assets/Scenes/Lobby.unity
   offlineSceneLoadDelay: 0
   transport: {fileID: 492999190}
@@ -1434,7 +1434,7 @@ RectTransform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1287902408}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 1142}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -1444,7 +1444,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -405, y: -322}
+  m_AnchoredPosition: {x: -341, y: -230}
   m_SizeDelta: {x: 200, y: 50}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!1001 &1402827283
@@ -1595,7 +1595,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1814607452}
-  - component: {fileID: 1814607451}
   - component: {fileID: 1814607450}
   m_Layer: 0
   m_Name: LobbyManager
@@ -1617,19 +1616,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   StartGameButton: {fileID: 1287902409}
---- !u!114 &1814607451
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1814607449}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 4ed0cb1705ea8484fb3a0c04e8b85432, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  StartGameButton: {fileID: 0}
 --- !u!4 &1814607452
 Transform:
   m_ObjectHideFlags: 0

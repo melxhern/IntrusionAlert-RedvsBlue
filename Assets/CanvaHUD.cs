@@ -44,21 +44,21 @@ public class CanvaHUD : MonoBehaviour
     public void ButtonHost()
     {
         NetworkManager.singleton.StartHost();
-        NetworkManager.singleton.ServerChangeScene("WaitingRoom(Offline)");
+        //NetworkManager.singleton.ServerChangeScene("WaitingRoom(Offline)");
         SetupCanvas();
     }
 
     public void ButtonServer()
     {
         NetworkManager.singleton.StartServer();
-        NetworkManager.singleton.ServerChangeScene("WaitingRoom(Offline)");
+        //NetworkManager.singleton.ServerChangeScene("WaitingRoom(Offline)");
         SetupCanvas();
     }
 
     public void ButtonClient()
     {
         NetworkManager.singleton.StartClient();
-        NetworkManager.singleton.ServerChangeScene("WaitingRoom(Offline)");
+        //NetworkManager.singleton.ServerChangeScene("WaitingRoom(Offline)");
         SetupCanvas();
     }
 

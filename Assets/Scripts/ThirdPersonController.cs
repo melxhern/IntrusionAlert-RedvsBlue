@@ -126,17 +126,25 @@ namespace StarterAssets
 
         private void Awake()
         {
-            // get a reference to our main camera
+            
+            // Référence à la caméra principale
+            
             if (_mainCamera == null)
             {
                 _mainCamera = GameObject.FindGameObjectWithTag("MainCamera");
             }
+            //if (isLocalPlayer)
+            //{
+            //    // Déverrouille et rend visible le curseur uniquement pour le joueur local
+            //    Cursor.lockState = CursorLockMode.Confined;
+            //    Cursor.visible = true;
+            //}
         }
 
         private void Start()
         {
             _cinemachineTargetYaw = CinemachineCameraTarget.transform.rotation.eulerAngles.y;
-            
+
             _hasAnimator = TryGetComponent(out _animator);
             _controller = GetComponent<CharacterController>();
             _input = GetComponent<StarterAssetsInputs>();
@@ -151,10 +159,13 @@ namespace StarterAssets
             // reset our timeouts on start
             _jumpTimeoutDelta = JumpTimeout;
             _fallTimeoutDelta = FallTimeout;
+            
         }
 
         private void Update()
         {
+            if (!isLocalPlayer) return;
+
             _hasAnimator = TryGetComponent(out _animator);
 
             JumpAndGravity();
@@ -164,7 +175,18 @@ namespace StarterAssets
 
         private void LateUpdate()
         {
+            //if (!isLocalPlayer) return;
+
             CameraRotation();
+
+        }
+
+
+        public override void OnStartAuthority()
+        {
+            base.OnStartAuthority();
+            PlayerInput playerInput = GetComponent<PlayerInput>();
+            playerInput.enabled = true;
         }
 
         private void AssignAnimationIDs()
