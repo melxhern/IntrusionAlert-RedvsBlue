@@ -21,11 +21,8 @@ public class AntivirusManager : MonoBehaviour
     /// </summary>
     public void ActivateAntivirus()
     {
-        // Vérifie s'il y a un ordinateur actuellement sélectionné BLUE TEAM
-        //GameObject selectedComputer = InteractMissionObject.currentMissionObject;
-        GameObject selectedComputer = InteractUSBKey.currentMissionObject;
-
-        Debug.Log("selectedComputer" + selectedComputer);
+        // Vérifie s'il y a un ordinateur actuellement sélectionné
+        GameObject selectedComputer = InteractMissionObject.currentMissionObject;
 
         if (selectedComputer == null)
         {
@@ -66,10 +63,7 @@ public class AntivirusManager : MonoBehaviour
     {
         while (true)
         {
-            //GameObject selectedComputer = InteractMissionObject.currentMissionObject;
-            GameObject selectedComputer = InteractUSBKey.currentMissionObject;
-
-            Transform button = antivirusMissionUI.transform.Find("start/ButtonAntivirus");
+            GameObject selectedComputer = InteractMissionObject.currentMissionObject;
 
             if (selectedComputer == null)
             {
@@ -83,26 +77,37 @@ public class AntivirusManager : MonoBehaviour
                 {
                     canvasText.text = $"{selectedComputer.name} est protégé. Temps restant : {Mathf.CeilToInt(timeRemaining)}s.";
                     // Rendre le bouton invisible
-                    button.gameObject.SetActive(false);
+                    Transform image=  antivirusMissionUI.transform.Find("start/test");
+                    image.gameObject.SetActive(true);
+                    Transform button = antivirusMissionUI.transform.Find("start/ButtonAntivirus");
+                    if (button != null)
+                    {
+                        button.gameObject.SetActive(false); // Cache le bouton
+                        
+                    }
                 }
                 else
                 {
                     // Retirer l'ordinateur de la liste active lorsqu'il n'est plus protégé.
                     activeAntivirus.Remove(selectedComputer);
                     canvasText.text = $"{selectedComputer.name} était protégé, mais l'antivirus a expiré.";
-                    button.gameObject.SetActive(true);
-
+                    Transform image=  antivirusMissionUI.transform.Find("start/test");
+                    image.gameObject.SetActive(false);
+                    // Rendre le bouton visible
+                    Transform button = antivirusMissionUI.transform.Find("start/ButtonAntivirus");
+                    if (button != null)
+                    {
+                        button.gameObject.SetActive(true); // Montre le bouton
+                    }
                 }
             }
             else if (antivirusActivationLog.ContainsKey(selectedComputer))
             {
                 canvasText.text = $"{selectedComputer.name} était protégé, mais l'antivirus a expiré.";
-                button.gameObject.SetActive(true);
             }
             else
             {
                 canvasText.text = $"{selectedComputer.name} n'a jamais été protégé.";
-                button.gameObject.SetActive(true);
             }
 
             // Attendre 1 seconde avant de mettre à jour à nouveau.
@@ -125,9 +130,7 @@ public class AntivirusManager : MonoBehaviour
         }
 
         // Affiche l'ordinateur sélectionné
-        //GameObject selectedComputer = InteractMissionObject.currentMissionObject;
-        GameObject selectedComputer = InteractUSBKey.currentMissionObject;
-
+        GameObject selectedComputer = InteractMissionObject.currentMissionObject;
         if (selectedComputer != null)
         {
             selectedComputerText.text = $"Ordinateur sélectionné : {selectedComputer.name}";
