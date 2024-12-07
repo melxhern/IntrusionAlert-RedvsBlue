@@ -6,6 +6,7 @@ TagManager:
   tags:
   - CinemachineTarget
   - MissionObject
+  - MalwareKey
   layers:
   - Default
   - TransparentFX
