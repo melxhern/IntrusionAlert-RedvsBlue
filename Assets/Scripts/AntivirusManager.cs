@@ -103,10 +103,14 @@ public class AntivirusManager : MonoBehaviour
             else if (antivirusActivationLog.ContainsKey(selectedComputer))
             {
                 canvasText.text = $"{selectedComputer.name} était protégé, mais l'antivirus a expiré.";
+                Transform button = antivirusMissionUI.transform.Find("start/ButtonAntivirus");
+                button.gameObject.SetActive(true);
             }
             else
             {
                 canvasText.text = $"{selectedComputer.name} n'a jamais été protégé.";
+                Transform button = antivirusMissionUI.transform.Find("start/ButtonAntivirus");
+                button.gameObject.SetActive(true);
             }
 
             // Attendre 1 seconde avant de mettre à jour à nouveau.
