@@ -8,13 +8,23 @@ public class InteractUSBKey : MonoBehaviour
 {
 
     public float detectionRadius = 1f; // Rayon de détection
+
     public string keyTag = "MalwareKey"; // Tag des objets détectables
     public string antivirusTag = "MissionObject"; // Tag des objets détectables
+
     public static GameObject currentMissionObject = null; // L'objet actuellement sélectionné
     public GameObject playerRightHand;
-    public GameObject antivirusUI; // UI à activer
+    public GameObject malwareCanvas;
+    public GameObject protectedCanvas;
+    public GameObject antivirusUI;
 
     private GameObject heldObject = null; // L'objet actuellement tenu dans la main
+
+    private bool isProtected = false;
+    public LoadingBar loadingBarScript; // Référence au script LoadingBar
+
+
+
 
     // Start is called before the first frame update
     void Start()
@@ -82,7 +92,6 @@ public class InteractUSBKey : MonoBehaviour
             // Si un objet "AntivirusMissionObject" est détecté et cliqué
             if (currentMissionObject != null && currentMissionObject.CompareTag(antivirusTag))
             {
-                Debug.Log("Antivirus object detected");
                 InteractWithAntivirusObject();
             }
 
@@ -99,13 +108,45 @@ public class InteractUSBKey : MonoBehaviour
 
     void InteractWithAntivirusObject()
     {
-        // Vérifie si le joueur tient une clé USB dans sa main
-        if (heldObject != null && heldObject.CompareTag(keyTag))
-        {
-            antivirusUI.gameObject.SetActive(true); // Active l'interface antivirus
-            Debug.Log("Antivirus UI activated");
-        }
+        // Vérifie si un ordinateur est sélectionné
+        if (currentMissionObject == null || heldObject == null || !heldObject.CompareTag(keyTag))
+            return;
 
+        // // Vérifie si l'objet sélectionné est un ordinateur
+        // if (currentMissionObject.CompareTag(antivirusTag))
+        // {
+        //     if (heldObject != null && heldObject.CompareTag(keyTag))
+        //     {
+        //         // Vérifie si l'ordinateur est protégé
+        //         bool isProtected = FindObjectOfType<AntivirusManager>().IsComputerProtected(currentMissionObject);
 
+        //         if (isProtected)
+        //         {
+        //             Debug.Log($"{currentMissionObject.name} est déjà protégé.");
+        //         }
+        //         else
+        //         {
+        //             Debug.Log($"{currentMissionObject.name} n'est pas protégé. Vous pouvez intervenir avec la clé USB.");
+        //             antivirusUI.gameObject.SetActive(true); // Active l'interface antivirus
+        //             Transform usbUI = antivirusUI.transform.Find("usbInserted");
+        //             usbUI.gameObject.SetActive(true);
+        //         }
+        //     }
+
+        // }
+
+        // Vérifie si l'ordinateur est protégé
+        isProtected = FindObjectOfType<AntivirusManager>().IsComputerProtected(currentMissionObject);
+        Debug.Log("isProtected" + isProtected);
+
+        // Déclenche la barre de chargement
+        GameObject usbUI = antivirusUI.transform.Find("usbInserted").gameObject;
+        usbUI.gameObject.SetActive(true);
+
+        loadingBarScript.currentCanvas = usbUI; // Canvas actuel
+        loadingBarScript.canvasToShow = isProtected ? protectedCanvas : malwareCanvas; // Canvas final
+        //loadingBarScript.StartLoading();
+        loadingBarScript.enabled = true; // Active la logique de chargement
     }
+
 }
