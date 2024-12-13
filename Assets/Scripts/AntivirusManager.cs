@@ -21,8 +21,11 @@ public class AntivirusManager : MonoBehaviour
     /// </summary>
     public void ActivateAntivirus()
     {
-        // Vérifie s'il y a un ordinateur actuellement sélectionné
-        GameObject selectedComputer = InteractMissionObject.currentMissionObject;
+        // Affiche l'ordinateur sélectionné si n'a pas la clé USB
+        GameObject selectedComputer = InteractUSBKey.currentMissionObject != null
+            ? InteractUSBKey.currentMissionObject
+            : InteractMissionObject.currentMissionObject;
+
 
         if (selectedComputer == null)
         {
@@ -63,7 +66,10 @@ public class AntivirusManager : MonoBehaviour
     {
         while (true)
         {
-            GameObject selectedComputer = InteractMissionObject.currentMissionObject;
+            // Affiche l'ordinateur sélectionné si n'a pas la clé USB
+            GameObject selectedComputer = InteractUSBKey.currentMissionObject != null
+                ? InteractUSBKey.currentMissionObject
+                : InteractMissionObject.currentMissionObject;
 
             if (selectedComputer == null)
             {
@@ -77,28 +83,21 @@ public class AntivirusManager : MonoBehaviour
                 {
                     canvasText.text = $"{selectedComputer.name} est protégé. Temps restant : {Mathf.CeilToInt(timeRemaining)}s.";
                     // Rendre le bouton invisible
-                    Transform image=  antivirusMissionUI.transform.Find("start/test");
-                    image.gameObject.SetActive(true);
+                    //Transform image = antivirusMissionUI.transform.Find("start/test");
+                    //image.gameObject.SetActive(true);
                     Transform button = antivirusMissionUI.transform.Find("start/ButtonAntivirus");
-                    if (button != null)
-                    {
-                        button.gameObject.SetActive(false); // Cache le bouton
-                        
-                    }
+                    button.gameObject.SetActive(false);
                 }
                 else
                 {
                     // Retirer l'ordinateur de la liste active lorsqu'il n'est plus protégé.
                     activeAntivirus.Remove(selectedComputer);
                     canvasText.text = $"{selectedComputer.name} était protégé, mais l'antivirus a expiré.";
-                    Transform image=  antivirusMissionUI.transform.Find("start/test");
-                    image.gameObject.SetActive(false);
+                    //Transform image = antivirusMissionUI.transform.Find("start/test");
+                    //image.gameObject.SetActive(false);
                     // Rendre le bouton visible
                     Transform button = antivirusMissionUI.transform.Find("start/ButtonAntivirus");
-                    if (button != null)
-                    {
-                        button.gameObject.SetActive(true); // Montre le bouton
-                    }
+                    button.gameObject.SetActive(true);
                 }
             }
             else if (antivirusActivationLog.ContainsKey(selectedComputer))
@@ -129,8 +128,11 @@ public class AntivirusManager : MonoBehaviour
             antivirusLogText.text += $"{log.Key.name} activé à {FormatTime(log.Value)}\n";
         }
 
-        // Affiche l'ordinateur sélectionné
-        GameObject selectedComputer = InteractMissionObject.currentMissionObject;
+        // Affiche l'ordinateur sélectionné si n'a pas la clé USB
+        GameObject selectedComputer = InteractUSBKey.currentMissionObject != null
+            ? InteractUSBKey.currentMissionObject
+            : InteractMissionObject.currentMissionObject;
+
         if (selectedComputer != null)
         {
             selectedComputerText.text = $"Ordinateur sélectionné : {selectedComputer.name}";
@@ -150,6 +152,12 @@ public class AntivirusManager : MonoBehaviour
         int seconds = Mathf.FloorToInt(timeInSeconds % 60);
         return $"{minutes:D2}:{seconds:D2}";
     }
+
+    public bool IsComputerProtected(GameObject computer)
+    {
+        return activeAntivirus.ContainsKey(computer) && activeAntivirus[computer] > Time.time;
+    }
+
 
 
 }
