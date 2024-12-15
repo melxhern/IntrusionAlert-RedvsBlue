@@ -1,6 +1,8 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using DentedPixel;
+
 public class LoadingBar : MonoBehaviour
 {
 
@@ -10,55 +12,29 @@ public class LoadingBar : MonoBehaviour
 
     public float time = 5f; // Temps total pour remplir la barre
 
-    private Vector3 originalScale; // Échelle originale de la barre
-    private float elapsedTime = 0f; // Temps écoulé depuis le début
-    private bool isLoadingComplete = false;
-
-
-    // Start is called before the first frame update
-    void Start()
+    public void Start()
     {
-
-        ResetLoadingBar(); // Réinitialise dès le départ
-        //enabled = true; // Réactiver le script de mise à jour
+        loadingBar.transform.localScale = new Vector3(0, loadingBar.transform.localScale.y, loadingBar.transform.localScale.z);
 
     }
 
-    // Réinitialise la barre de chargement
-    public void ResetLoadingBar()
+    public void AnimateBar()
     {
-        elapsedTime = 0f;
-        originalScale = loadingBar.transform.localScale;
-        isLoadingComplete = false;
-        loadingBar.transform.localScale = new Vector3(0, originalScale.y, originalScale.z);
-        Debug.Log("Barre de chargement réinitialisée.");
+        LeanTween.scaleX(loadingBar, 1, time).setOnComplete(OnComplete);
+        Debug.Log("Barre de chargement animée.");
     }
 
-    void Update()
+    public void OnComplete()
     {
-        if (!isLoadingComplete)
-        {
-            // Augmenter le temps écoulé
-            elapsedTime += Time.deltaTime;
-
-            // Calculer le facteur de progression
-            float progress = Mathf.Clamp01(elapsedTime / time);
-            loadingBar.transform.localScale = new Vector3(progress * originalScale.x, originalScale.y, originalScale.z);
-
-            // Si le chargement est terminé, activer le Canvas
-            if (elapsedTime >= time)
-            {
-                isLoadingComplete = true;
-                canvasToShow.SetActive(true);
-                currentCanvas.SetActive(false);
-            }
-        }
+        canvasToShow.SetActive(true);
+        currentCanvas.SetActive(false);
+        LeanTween.scaleX(loadingBar, 0, 0);
     }
-
 
     public void Deactivate()
     {
-        ResetLoadingBar();
-        this.enabled = false;
+        LeanTween.cancel(loadingBar);
+        LeanTween.scaleX(loadingBar, 0, 0);
     }
+
 }

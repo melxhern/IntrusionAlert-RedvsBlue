@@ -143,10 +143,13 @@ public class InteractUSBKey : MonoBehaviour
         GameObject usbUI = antivirusUI.transform.Find("usbInserted").gameObject;
         usbUI.gameObject.SetActive(true);
 
+        Debug.Log("usbUI" + usbUI);
+
         loadingBarScript.currentCanvas = usbUI; // Canvas actuel
         loadingBarScript.canvasToShow = isProtected ? protectedCanvas : malwareCanvas; // Canvas final
-        //loadingBarScript.StartLoading();
         loadingBarScript.enabled = true; // Active la logique de chargement
+        loadingBarScript.AnimateBar(); // Démarre l'animation de la barre de chargement
+
     }
 
 }
