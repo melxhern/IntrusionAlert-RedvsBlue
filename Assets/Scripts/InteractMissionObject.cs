@@ -66,6 +66,7 @@ public class InteractMissionObject : MonoBehaviour
         {
             // Activer le canvas principal
             antivirusMissionUI.SetActive(true);
+            Debug.Log($"Objet sélectionné : {currentMissionObject.name}");
         }
     }
 

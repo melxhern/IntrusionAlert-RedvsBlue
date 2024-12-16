@@ -13,7 +13,7 @@ public class AntivirusManager : MonoBehaviour
     public TMP_Text antivirusLogText; // Texte affichant l'historique
     public float antivirusDuration = 120f; // Durée de l'antivirus en secondes
 
-    private Dictionary<GameObject, float> activeAntivirus = new Dictionary<GameObject, float>();
+    public Dictionary<GameObject, float> activeAntivirus = new Dictionary<GameObject, float>();
     private Dictionary<GameObject, float> antivirusActivationLog = new Dictionary<GameObject, float>();
 
     /// <summary>
@@ -29,7 +29,6 @@ public class AntivirusManager : MonoBehaviour
 
         if (selectedComputer == null)
         {
-            Debug.LogWarning("Aucun ordinateur n'est actuellement sélectionné.");
             canvasText.text = "Aucun ordinateur sélectionné.";
             return;
         }
@@ -43,7 +42,6 @@ public class AntivirusManager : MonoBehaviour
             antivirusActivationLog[selectedComputer] = Time.time;
         }
 
-        Debug.Log($"Antivirus activé sur {selectedComputer.name}.");
         UpdateUI(); // Met à jour l'interface utilisateur
     }
 
@@ -70,6 +68,8 @@ public class AntivirusManager : MonoBehaviour
             GameObject selectedComputer = InteractUSBKey.currentMissionObject != null
                 ? InteractUSBKey.currentMissionObject
                 : InteractMissionObject.currentMissionObject;
+
+            MalwareManager malwareManager = FindObjectOfType<MalwareManager>();
 
             if (selectedComputer == null)
             {
@@ -100,12 +100,20 @@ public class AntivirusManager : MonoBehaviour
                     button.gameObject.SetActive(true);
                 }
             }
+
             else if (antivirusActivationLog.ContainsKey(selectedComputer))
             {
                 canvasText.text = $"{selectedComputer.name} était protégé, mais l'antivirus a expiré.";
                 Transform button = antivirusMissionUI.transform.Find("start/ButtonAntivirus");
                 button.gameObject.SetActive(true);
             }
+
+            else if (malwareManager.IsInfected(selectedComputer))
+            {
+                GameObject malware = antivirusMissionUI.transform.Find("malware").gameObject;
+                malware.gameObject.SetActive(true);
+            }
+
             else
             {
                 canvasText.text = $"{selectedComputer.name} n'a jamais été protégé.";

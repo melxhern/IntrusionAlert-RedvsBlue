@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem; // Nécessaire pour le nouveau système d'entrée
+using System.Linq;
 
 
 public class InteractUSBKey : MonoBehaviour
@@ -23,13 +24,17 @@ public class InteractUSBKey : MonoBehaviour
     private bool isProtected = false;
     public LoadingBar loadingBarScript; // Référence au script LoadingBar
 
-
+    private MalwareManager malwareManager;
 
 
     // Start is called before the first frame update
     void Start()
     {
-
+        malwareManager = FindObjectOfType<MalwareManager>();
+        if (malwareManager == null)
+        {
+            Debug.LogError("MalwareManager not found.");
+        }
     }
 
     // Update is called once per frame
@@ -57,7 +62,6 @@ public class InteractUSBKey : MonoBehaviour
                 {
                     closestDistance = distance;
                     closestObject = detectedObject;
-                    Debug.Log("hit collider");
                 }
             }
         }
@@ -66,7 +70,6 @@ public class InteractUSBKey : MonoBehaviour
         if (currentMissionObject != null && currentMissionObject != closestObject)
         {
             currentMissionObject.GetComponent<Outline>().enabled = false;
-            Debug.Log("enabled");
         }
 
         if (closestObject != null)
@@ -112,43 +115,37 @@ public class InteractUSBKey : MonoBehaviour
         if (currentMissionObject == null || heldObject == null || !heldObject.CompareTag(keyTag))
             return;
 
-        // // Vérifie si l'objet sélectionné est un ordinateur
-        // if (currentMissionObject.CompareTag(antivirusTag))
-        // {
-        //     if (heldObject != null && heldObject.CompareTag(keyTag))
-        //     {
-        //         // Vérifie si l'ordinateur est protégé
-        //         bool isProtected = FindObjectOfType<AntivirusManager>().IsComputerProtected(currentMissionObject);
-
-        //         if (isProtected)
-        //         {
-        //             Debug.Log($"{currentMissionObject.name} est déjà protégé.");
-        //         }
-        //         else
-        //         {
-        //             Debug.Log($"{currentMissionObject.name} n'est pas protégé. Vous pouvez intervenir avec la clé USB.");
-        //             antivirusUI.gameObject.SetActive(true); // Active l'interface antivirus
-        //             Transform usbUI = antivirusUI.transform.Find("usbInserted");
-        //             usbUI.gameObject.SetActive(true);
-        //         }
-        //     }
-
-        // }
 
         // Vérifie si l'ordinateur est protégé
         isProtected = FindObjectOfType<AntivirusManager>().IsComputerProtected(currentMissionObject);
-        Debug.Log("isProtected" + isProtected);
 
-        // Déclenche la barre de chargement
-        GameObject usbUI = antivirusUI.transform.Find("usbInserted").gameObject;
-        usbUI.gameObject.SetActive(true);
+        if (malwareManager != null && malwareManager.IsInfected(currentMissionObject))
+        {
+            Debug.Log($"JE SUIS ICIIIIIIIIIIII L'ordinateur {currentMissionObject.name} est déjà infecté.");
 
-        Debug.Log("usbUI" + usbUI);
+            GameObject malware = antivirusUI.transform.Find("malware").gameObject;
+            malware.gameObject.SetActive(true);
+        }
+        else
+        {
+            // Verif que tout est bien fermé avant de lancer la barre de chargement
+            GameObject malwareUI = antivirusUI.transform.Find("malware").gameObject;
+            malwareUI.gameObject.SetActive(false);
+            GameObject protectedUI = antivirusUI.transform.Find("protected").gameObject;
+            protectedUI.gameObject.SetActive(false);
 
-        loadingBarScript.currentCanvas = usbUI; // Canvas actuel
-        loadingBarScript.canvasToShow = isProtected ? protectedCanvas : malwareCanvas; // Canvas final
-        loadingBarScript.enabled = true; // Active la logique de chargement
-        loadingBarScript.AnimateBar(); // Démarre l'animation de la barre de chargement
+            // Déclenche la barre de chargement
+            GameObject usbUI = antivirusUI.transform.Find("usbInserted").gameObject;
+            usbUI.gameObject.SetActive(true);
+
+            loadingBarScript.currentCanvas = usbUI; // Canvas actuel
+            loadingBarScript.canvasToShow = isProtected ? protectedCanvas : malwareCanvas; // Canvas final
+            loadingBarScript.enabled = true; // Active la logique de chargement
+            loadingBarScript.AnimateBar(); // Démarre l'animation de la barre de chargement
+
+            //malwareManager.ActivateMalware();
+        }
+
 
     }
 

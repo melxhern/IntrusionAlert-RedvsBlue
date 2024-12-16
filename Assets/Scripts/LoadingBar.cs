@@ -15,13 +15,11 @@ public class LoadingBar : MonoBehaviour
     public void Start()
     {
         loadingBar.transform.localScale = new Vector3(0, loadingBar.transform.localScale.y, loadingBar.transform.localScale.z);
-
     }
 
     public void AnimateBar()
     {
         LeanTween.scaleX(loadingBar, 1, time).setOnComplete(OnComplete);
-        Debug.Log("Barre de chargement animée.");
     }
 
     public void OnComplete()
@@ -29,6 +27,19 @@ public class LoadingBar : MonoBehaviour
         canvasToShow.SetActive(true);
         currentCanvas.SetActive(false);
         LeanTween.scaleX(loadingBar, 0, 0);
+
+        if (canvasToShow.name == "malware")
+        {
+            MalwareManager malwareManager = FindObjectOfType<MalwareManager>();
+            malwareManager.ActivateMalware();
+        }
+        if (currentCanvas.name == "installing")
+        {
+            AntivirusManager antivirusManager = FindObjectOfType<AntivirusManager>();
+            antivirusManager.ActivateAntivirus();
+            antivirusManager.ShowAntivirusStatus();
+        }
+
     }
 
     public void Deactivate()
