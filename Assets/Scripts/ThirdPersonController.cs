@@ -1,5 +1,7 @@
 ﻿using UnityEngine;
 using Mirror;
+using System.Collections;
+using System.Collections.Generic;
 #if ENABLE_INPUT_SYSTEM && STARTER_ASSETS_PACKAGES_CHECKED
 using UnityEngine.InputSystem;
 #endif
@@ -76,6 +78,16 @@ namespace StarterAssets
         [Tooltip("For locking the camera position on all axis")]
         public bool LockCameraPosition = false;
 
+        [Header("Camera Settings")]
+        [Tooltip("Select the height here")]
+        public float HeightOfCamera;
+
+        [Tooltip("Select the width here")]
+        public float WidthOfCamera;
+
+        [Tooltip("Select the angle here")]
+        public float AngleOfCamera;
+
         // cinemachine
         private float _cinemachineTargetYaw;
         private float _cinemachineTargetPitch;
@@ -133,12 +145,7 @@ namespace StarterAssets
             {
                 _mainCamera = GameObject.FindGameObjectWithTag("MainCamera");
             }
-            //if (isLocalPlayer)
-            //{
-            //    // Déverrouille et rend visible le curseur uniquement pour le joueur local
-            //    Cursor.lockState = CursorLockMode.Confined;
-            //    Cursor.visible = true;
-            //}
+            
         }
 
         private void Start()
@@ -175,7 +182,7 @@ namespace StarterAssets
 
         private void LateUpdate()
         {
-            //if (!isLocalPlayer) return;
+            if (!isLocalPlayer) return;
 
             CameraRotation();
 
@@ -215,12 +222,22 @@ namespace StarterAssets
 
         private void CameraRotation()
         {
+            if (!isLocalPlayer || !_mainCamera) return; //CinemachineCameraTarget
+
+        //    public float HeightOfCamera;
+
+        //[Tooltip("Select the width here")]
+        //public float WidthOfCamera;
+
+        //[Tooltip("Select the angle here")]
+        //public float AngleOfCamera;
+
             // Positionner la caméra au-dessus du personnage
-            Vector3 offset = new Vector3(0, 10f, -10f); // Ajustez la hauteur et la distance
-            CinemachineCameraTarget.transform.position = transform.position + offset;
+            Vector3 offset = new Vector3(0, HeightOfCamera, WidthOfCamera); // Ajustez la hauteur et la distance
+            _mainCamera.transform.position = transform.position + offset;
 
             // Fixer l'angle de la caméra pour une vue plongeante
-            CinemachineCameraTarget.transform.rotation = Quaternion.Euler(45f, 0f, 0f); // 45° vers le bas, pas de rotation latérale
+            _mainCamera.transform.rotation = Quaternion.Euler(AngleOfCamera, 0f, 0f); // 45° vers le bas, pas de rotation latérale
 
             /*// if there is an input and camera position is not fixed
             if (_input.look.sqrMagnitude >= _threshold && !LockCameraPosition)

@@ -669,6 +669,9 @@ MonoBehaviour:
   BottomClamp: -30
   CameraAngleOverride: 0
   LockCameraPosition: 0
+  HeightOfCamera: 10
+  WidthOfCamera: -10
+  AngleOfCamera: 45
 --- !u!114 &5746163190478174571
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -844,7 +847,7 @@ MonoBehaviour:
   compressRotation: 1
   interpolatePosition: 1
   interpolateRotation: 0
-  interpolateScale: 0
+  interpolateScale: 1
   coordinateSpace: 0
   timelineOffset: 1
   showGizmos: 0
@@ -869,7 +872,7 @@ MonoBehaviour:
   sceneId: 0
   _assetId: 1443552441
   serverOnly: 0
-  visibility: 0
+  visibility: 2
   hasSpawned: 0
 --- !u!1 &2651898197292205861
 GameObject:
