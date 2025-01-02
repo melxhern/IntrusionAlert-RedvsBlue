@@ -2,12 +2,19 @@
 using Mirror;
 using System.Collections;
 using System.Collections.Generic;
+using Assets.Scripts;
 #if ENABLE_INPUT_SYSTEM && STARTER_ASSETS_PACKAGES_CHECKED
 using UnityEngine.InputSystem;
 #endif
 
 /* Note: animations are called via the controller for both the character and capsule using animator null checks
  */
+
+public enum PlayerRole
+{
+    BlueTeam = 0,
+    RedTeam
+}
 
 namespace StarterAssets
 {
@@ -17,6 +24,13 @@ namespace StarterAssets
 #endif
     public class ThirdPersonController : NetworkBehaviour
     {
+        [SyncVar]
+        protected internal PlayerRole Role = PlayerRole.BlueTeam;
+
+        public static ThirdPersonController Local;
+
+        public bool CanMove = true;
+
         [Header("Player")]
         [Tooltip("Move speed of the character in m/s")]
         public float MoveSpeed = 2.0f;
@@ -135,20 +149,22 @@ namespace StarterAssets
             }
         }
 
+       
+
 
         private void Awake()
         {
             
             // Référence à la caméra principale
             
-            if (_mainCamera == null)
-            {
-                _mainCamera = GameObject.FindGameObjectWithTag("MainCamera");
-            }
+            //if (_mainCamera == null)
+            //{
+            //    _mainCamera = GameObject.FindGameObjectWithTag("MainCamera");
+            //}
             
         }
 
-        private void Start()
+        IEnumerator Start()
         {
             _cinemachineTargetYaw = CinemachineCameraTarget.transform.rotation.eulerAngles.y;
 
@@ -166,8 +182,24 @@ namespace StarterAssets
             // reset our timeouts on start
             _jumpTimeoutDelta = JumpTimeout;
             _fallTimeoutDelta = FallTimeout;
-            
+
+            if (isLocalPlayer)
+            {
+                Local = this;
+                _mainCamera = GameObject.FindGameObjectWithTag("MainCamera");
+            }
+            if (GameManager.Instance)
+            {
+                GameManager.Instance.AddPlayer(this);
+
+                CanMove = false;
+                yield return new WaitForSeconds(5);
+                CanMove = true;
+            }
+
         }
+
+        #region MOVEMENT
 
         private void Update()
         {
@@ -182,7 +214,7 @@ namespace StarterAssets
 
         private void LateUpdate()
         {
-            if (!isLocalPlayer) return;
+            if (!isLocalPlayer || !_mainCamera) return;
 
             CameraRotation();
 
@@ -436,5 +468,16 @@ namespace StarterAssets
                 AudioSource.PlayClipAtPoint(LandingAudioClip, transform.TransformPoint(_controller.center), FootstepAudioVolume);
             }
         }
+
+#endregion
+
+        #region ROLES
+
+
+
+
+
+
+        #endregion
     }
 }
