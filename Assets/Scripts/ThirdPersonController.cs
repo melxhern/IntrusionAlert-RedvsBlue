@@ -1,4 +1,8 @@
 ﻿using UnityEngine;
+using Mirror;
+using System.Collections;
+using System.Collections.Generic;
+using Assets.Scripts;
 #if ENABLE_INPUT_SYSTEM && STARTER_ASSETS_PACKAGES_CHECKED
 using UnityEngine.InputSystem;
 #endif
@@ -6,14 +10,27 @@ using UnityEngine.InputSystem;
 /* Note: animations are called via the controller for both the character and capsule using animator null checks
  */
 
+public enum PlayerRole
+{
+    BlueTeam = 0,
+    RedTeam
+}
+
 namespace StarterAssets
 {
     [RequireComponent(typeof(CharacterController))]
 #if ENABLE_INPUT_SYSTEM && STARTER_ASSETS_PACKAGES_CHECKED
     [RequireComponent(typeof(PlayerInput))]
 #endif
-    public class ThirdPersonController : MonoBehaviour
+    public class ThirdPersonController : NetworkBehaviour
     {
+        [SyncVar]
+        protected internal PlayerRole Role = PlayerRole.BlueTeam;
+
+        public static ThirdPersonController Local;
+
+        public bool CanMove = true;
+
         [Header("Player")]
         [Tooltip("Move speed of the character in m/s")]
         public float MoveSpeed = 2.0f;
@@ -75,6 +92,16 @@ namespace StarterAssets
         [Tooltip("For locking the camera position on all axis")]
         public bool LockCameraPosition = false;
 
+        [Header("Camera Settings")]
+        [Tooltip("Select the height here")]
+        public float HeightOfCamera;
+
+        [Tooltip("Select the width here")]
+        public float WidthOfCamera;
+
+        [Tooltip("Select the angle here")]
+        public float AngleOfCamera;
+
         // cinemachine
         private float _cinemachineTargetYaw;
         private float _cinemachineTargetPitch;
@@ -122,20 +149,25 @@ namespace StarterAssets
             }
         }
 
+       
+
 
         private void Awake()
         {
-            // get a reference to our main camera
-            if (_mainCamera == null)
-            {
-                _mainCamera = GameObject.FindGameObjectWithTag("MainCamera");
-            }
+            
+            // Référence à la caméra principale
+            
+            //if (_mainCamera == null)
+            //{
+            //    _mainCamera = GameObject.FindGameObjectWithTag("MainCamera");
+            //}
+            
         }
 
-        private void Start()
+        IEnumerator Start()
         {
             _cinemachineTargetYaw = CinemachineCameraTarget.transform.rotation.eulerAngles.y;
-            
+
             _hasAnimator = TryGetComponent(out _animator);
             _controller = GetComponent<CharacterController>();
             _input = GetComponent<StarterAssetsInputs>();
@@ -150,10 +182,29 @@ namespace StarterAssets
             // reset our timeouts on start
             _jumpTimeoutDelta = JumpTimeout;
             _fallTimeoutDelta = FallTimeout;
+
+            if (isLocalPlayer)
+            {
+                Local = this;
+                _mainCamera = GameObject.FindGameObjectWithTag("MainCamera");
+            }
+            if (GameManager.Instance)
+            {
+                GameManager.Instance.AddPlayer(this);
+
+                CanMove = false;
+                yield return new WaitForSeconds(5);
+                CanMove = true;
+            }
+
         }
+
+        #region MOVEMENT
 
         private void Update()
         {
+            if (!isLocalPlayer) return;
+
             _hasAnimator = TryGetComponent(out _animator);
 
             JumpAndGravity();
@@ -163,7 +214,18 @@ namespace StarterAssets
 
         private void LateUpdate()
         {
+            if (!isLocalPlayer || !_mainCamera) return;
+
             CameraRotation();
+
+        }
+
+
+        public override void OnStartAuthority()
+        {
+            base.OnStartAuthority();
+            PlayerInput playerInput = GetComponent<PlayerInput>();
+            playerInput.enabled = true;
         }
 
         private void AssignAnimationIDs()
@@ -192,7 +254,24 @@ namespace StarterAssets
 
         private void CameraRotation()
         {
-            // if there is an input and camera position is not fixed
+            if (!isLocalPlayer || !_mainCamera) return; //CinemachineCameraTarget
+
+        //    public float HeightOfCamera;
+
+        //[Tooltip("Select the width here")]
+        //public float WidthOfCamera;
+
+        //[Tooltip("Select the angle here")]
+        //public float AngleOfCamera;
+
+            // Positionner la caméra au-dessus du personnage
+            Vector3 offset = new Vector3(0, HeightOfCamera, WidthOfCamera); // Ajustez la hauteur et la distance
+            _mainCamera.transform.position = transform.position + offset;
+
+            // Fixer l'angle de la caméra pour une vue plongeante
+            _mainCamera.transform.rotation = Quaternion.Euler(AngleOfCamera, 0f, 0f); // 45° vers le bas, pas de rotation latérale
+
+            /*// if there is an input and camera position is not fixed
             if (_input.look.sqrMagnitude >= _threshold && !LockCameraPosition)
             {
                 //Don't multiply mouse input by Time.deltaTime;
@@ -209,6 +288,7 @@ namespace StarterAssets
             // Cinemachine will follow this target
             CinemachineCameraTarget.transform.rotation = Quaternion.Euler(_cinemachineTargetPitch + CameraAngleOverride,
                 _cinemachineTargetYaw, 0.0f);
+            */
         }
 
         private void Move()
@@ -388,5 +468,16 @@ namespace StarterAssets
                 AudioSource.PlayClipAtPoint(LandingAudioClip, transform.TransformPoint(_controller.center), FootstepAudioVolume);
             }
         }
+
+#endregion
+
+        #region ROLES
+
+
+
+
+
+
+        #endregion
     }
 }
