@@ -3,9 +3,17 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
+using Mirror;
+using System;
 
+[Serializable]
+public struct AntivirusData
+{
+    public uint computerNetId; // Utilisation de NetworkIdentity NetId
+    public float expirationTime;
+}
 
-public class AntivirusManager : MonoBehaviour
+public class AntivirusManager : NetworkBehaviour
 {
     public GameObject antivirusMissionUI; // UI 
     public TMP_Text canvasText; // Référence au texte principal pour afficher les informations
@@ -13,19 +21,18 @@ public class AntivirusManager : MonoBehaviour
     public TMP_Text antivirusLogText; // Texte affichant l'historique
     public float antivirusDuration = 120f; // Durée de l'antivirus en secondes
 
-    public Dictionary<GameObject, float> activeAntivirus = new Dictionary<GameObject, float>();
-    private Dictionary<GameObject, float> antivirusActivationLog = new Dictionary<GameObject, float>();
+    // Données synchronisées pour tous les clients
+    public readonly SyncList<AntivirusData> syncedAntivirusData = new SyncList<AntivirusData>();
+
+    // Dictionnaires pour le joueur local
+    private Dictionary<uint, float> activeAntivirus = new Dictionary<uint, float>();
 
     /// <summary>
     /// Active l'antivirus sur l'ordinateur sélectionné.
     /// </summary>
     public void ActivateAntivirus()
     {
-        // Affiche l'ordinateur sélectionné si n'a pas la clé USB
-        GameObject selectedComputer = InteractUSBKey.currentMissionObject != null
-            ? InteractUSBKey.currentMissionObject
-            : InteractMissionObject.currentMissionObject;
-
+        GameObject selectedComputer = InteractMissionObject.currentMissionObject;
 
         if (selectedComputer == null)
         {
@@ -33,16 +40,102 @@ public class AntivirusManager : MonoBehaviour
             return;
         }
 
-        // Active l'antivirus pour l'ordinateur sélectionné
-        activeAntivirus[selectedComputer] = Time.time + antivirusDuration;
-
-        // Enregistre dans l'historique
-        if (!antivirusActivationLog.ContainsKey(selectedComputer))
+        NetworkIdentity computerIdentity = selectedComputer.GetComponent<NetworkIdentity>();
+        if (computerIdentity != null)
         {
-            antivirusActivationLog[selectedComputer] = Time.time;
+            var playerRelay = NetworkClient.localPlayer.GetComponent<PlayerNetworkRelay>();
+            if (playerRelay != null)
+            {
+                Debug.Log($"Activation de l'antivirus sur l'ordinateur {selectedComputer.name} (ID {computerIdentity.netId}).");
+
+                playerRelay.CmdActivateAntivirus(computerIdentity.netId); // Utilisation de netId
+            }
+        }
+        else
+        {
+            Debug.LogError("L'ordinateur sélectionné n'a pas de NetworkIdentity.");
+        }
+    }
+
+    [Server]
+    public void ServerActivateAntivirus(uint computerNetId)
+    {
+
+        Debug.Log($"ServerActivateAntivirus: {computerNetId}");
+        float expirationTime = Time.time + antivirusDuration;
+        Debug.Log("expirationTime: " + expirationTime);
+        //Debug.Log("is it local player ? " + isLocalPlayer);
+        Debug.Log("networkServer.active: " + NetworkServer.active);
+
+
+        //Debug.Log("is it server ? " + isServer);
+        try
+        {
+            Debug.Log("syncedAntivirusData.Count: " + syncedAntivirusData.Count);
+            AntivirusData newAntivirusData = new AntivirusData
+            {
+                computerNetId = computerNetId,
+                expirationTime = expirationTime
+            };
+            Debug.Log("newAntivirusData.computerNetId: " + newAntivirusData.computerNetId);
+            Debug.Log("newAntivirusData.expirationTime: " + newAntivirusData.expirationTime);
+            syncedAntivirusData.Add(newAntivirusData);
+            Debug.Log("syncedAntivirusData.Count: " + syncedAntivirusData.Count);
+            //Debug.Log("is server ? " + isServer);
+        }
+        catch (Exception e)
+        {
+            Debug.Log("Exception: " + e);
+        }
+        // if (isServer)
+        // {
+        //     Debug.Log("it is indeed server");
+        //     Debug.Log("syncedAntivirusData.Count: " + syncedAntivirusData.Count);
+        //     Debug.Log("computerNetId: " + computerNetId);
+        //     Debug.Log("expirationTime: " + expirationTime);
+        //     AntivirusData newAntivirusData = new AntivirusData
+        //     {
+        //         computerNetId = computerNetId,
+        //         expirationTime = expirationTime
+        //     };
+        //     Debug.Log("newAntivirusData.computerNetId: " + newAntivirusData.computerNetId);
+        //     Debug.Log("newAntivirusData.expirationTime: " + newAntivirusData.expirationTime);
+        //     syncedAntivirusData.Add(newAntivirusData);
+        //     Debug.Log("syncedAntivirusData.Count: " + syncedAntivirusData.Count);
+        // }
+
+        Debug.Log("syncedAntivirusData.Count: " + syncedAntivirusData.Count);
+        //RpcUpdateAntivirusStatus(computerNetId, expirationTime);
+    }
+
+    [ClientRpc]
+    private void RpcUpdateAntivirusStatus(uint computerNetId, float expirationTime)
+    {
+        Debug.Log("on est dans RpcUpdateAntivirusStatus");
+        if (!activeAntivirus.ContainsKey(computerNetId))
+        {
+            activeAntivirus[computerNetId] = expirationTime;
         }
 
-        UpdateUI(); // Met à jour l'interface utilisateur
+        UpdateUI();
+    }
+
+    /// <summary>
+    /// Vérifie si un ordinateur est protégé.
+    /// </summary>
+    private bool IsComputerProtected(GameObject computer)
+    {
+        NetworkIdentity identity = computer.GetComponent<NetworkIdentity>();
+        if (identity == null) return false;
+
+        foreach (var data in syncedAntivirusData)
+        {
+            if (data.computerNetId == identity.netId && data.expirationTime > Time.time)
+            {
+                return true;
+            }
+        }
+        return false;
     }
 
     /// <summary>
@@ -50,10 +143,7 @@ public class AntivirusManager : MonoBehaviour
     /// </summary>
     public void ShowAntivirusStatus()
     {
-        // Arrête toute coroutine existante pour éviter des conflits.
         StopAllCoroutines();
-
-        // Lancer une coroutine pour mettre à jour l'état régulièrement.
         StartCoroutine(UpdateAntivirusStatus());
     }
 
@@ -64,90 +154,64 @@ public class AntivirusManager : MonoBehaviour
     {
         while (true)
         {
-            // Affiche l'ordinateur sélectionné si n'a pas la clé USB
-            GameObject selectedComputer = InteractUSBKey.currentMissionObject != null
-                ? InteractUSBKey.currentMissionObject
-                : InteractMissionObject.currentMissionObject;
-
-            MalwareManager malwareManager = FindObjectOfType<MalwareManager>();
+            GameObject selectedComputer = InteractMissionObject.currentMissionObject;
 
             if (selectedComputer == null)
             {
                 canvasText.text = "Aucun ordinateur sélectionné.";
             }
-            else if (activeAntivirus.ContainsKey(selectedComputer))
+            else
             {
-                float timeRemaining = activeAntivirus[selectedComputer] - Time.time;
-
-                if (timeRemaining > 0)
+                NetworkIdentity identity = selectedComputer.GetComponent<NetworkIdentity>();
+                if (identity != null && IsComputerProtected(selectedComputer))
                 {
-                    canvasText.text = $"{selectedComputer.name} est protégé. Temps restant : {Mathf.CeilToInt(timeRemaining)}s.";
-                    // Rendre le bouton invisible
-                    //Transform image = antivirusMissionUI.transform.Find("start/test");
-                    //image.gameObject.SetActive(true);
-                    Transform button = antivirusMissionUI.transform.Find("start/ButtonAntivirus");
-                    button.gameObject.SetActive(false);
+                    float timeRemaining = activeAntivirus[identity.netId] - Time.time;
+
+                    if (timeRemaining > 0)
+                    {
+                        canvasText.text = $"{selectedComputer.name} est protégé. Temps restant : {Mathf.CeilToInt(timeRemaining)}s.";
+                        Transform button = antivirusMissionUI.transform.Find("start/ButtonAntivirus");
+                        if (button != null) button.gameObject.SetActive(false);
+                    }
+                    else
+                    {
+                        activeAntivirus.Remove(identity.netId);
+                        canvasText.text = $"{selectedComputer.name} était protégé, mais l'antivirus a expiré.";
+                        Transform button = antivirusMissionUI.transform.Find("start/ButtonAntivirus");
+                        if (button != null) button.gameObject.SetActive(true);
+                    }
                 }
                 else
                 {
-                    // Retirer l'ordinateur de la liste active lorsqu'il n'est plus protégé.
-                    activeAntivirus.Remove(selectedComputer);
-                    canvasText.text = $"{selectedComputer.name} était protégé, mais l'antivirus a expiré.";
-                    //Transform image = antivirusMissionUI.transform.Find("start/test");
-                    //image.gameObject.SetActive(false);
-                    // Rendre le bouton visible
+                    canvasText.text = $"{selectedComputer.name} n'a jamais été protégé.";
                     Transform button = antivirusMissionUI.transform.Find("start/ButtonAntivirus");
-                    button.gameObject.SetActive(true);
+                    if (button != null) button.gameObject.SetActive(true);
                 }
             }
 
-            else if (antivirusActivationLog.ContainsKey(selectedComputer))
-            {
-                canvasText.text = $"{selectedComputer.name} était protégé, mais l'antivirus a expiré.";
-                Transform button = antivirusMissionUI.transform.Find("start/ButtonAntivirus");
-                button.gameObject.SetActive(true);
-            }
-
-            else if (malwareManager.IsInfected(selectedComputer))
-            {
-                GameObject malware = antivirusMissionUI.transform.Find("malware").gameObject;
-                malware.gameObject.SetActive(true);
-            }
-
-            else
-            {
-                canvasText.text = $"{selectedComputer.name} n'a jamais été protégé.";
-                Transform button = antivirusMissionUI.transform.Find("start/ButtonAntivirus");
-                button.gameObject.SetActive(true);
-            }
-
-            // Attendre 1 seconde avant de mettre à jour à nouveau.
             yield return new WaitForSeconds(1f);
         }
     }
-
 
     /// <summary>
     /// Met à jour les textes de l'interface utilisateur.
     /// </summary>
     private void UpdateUI()
     {
-        // Met à jour le texte de l'historique
         antivirusLogText.text = "Historique des activations :\n";
 
-        foreach (var log in antivirusActivationLog)
+        foreach (var data in syncedAntivirusData)
         {
-            antivirusLogText.text += $"{log.Key.name} activé à {FormatTime(log.Value)}\n";
+            antivirusLogText.text += $"Ordinateur ID {data.computerNetId} activé jusqu'à {FormatTime(data.expirationTime)}\n";
         }
 
-        // Affiche l'ordinateur sélectionné si n'a pas la clé USB
-        GameObject selectedComputer = InteractUSBKey.currentMissionObject != null
-            ? InteractUSBKey.currentMissionObject
-            : InteractMissionObject.currentMissionObject;
-
+        GameObject selectedComputer = InteractMissionObject.currentMissionObject;
         if (selectedComputer != null)
         {
-            selectedComputerText.text = $"Ordinateur sélectionné : {selectedComputer.name}";
+            NetworkIdentity identity = selectedComputer.GetComponent<NetworkIdentity>();
+            selectedComputerText.text = identity != null
+                ? $"Ordinateur sélectionné : ID {identity.netId}"
+                : "Aucun ordinateur sélectionné.";
         }
         else
         {
@@ -164,12 +228,4 @@ public class AntivirusManager : MonoBehaviour
         int seconds = Mathf.FloorToInt(timeInSeconds % 60);
         return $"{minutes:D2}:{seconds:D2}";
     }
-
-    public bool IsComputerProtected(GameObject computer)
-    {
-        return activeAntivirus.ContainsKey(computer) && activeAntivirus[computer] > Time.time;
-    }
-
-
-
 }

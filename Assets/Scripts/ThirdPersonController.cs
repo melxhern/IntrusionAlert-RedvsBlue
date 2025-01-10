@@ -144,24 +144,24 @@ namespace StarterAssets
 #if ENABLE_INPUT_SYSTEM && STARTER_ASSETS_PACKAGES_CHECKED
                 return _playerInput.currentControlScheme == "KeyboardMouse";
 #else
-				return false;
+                return false;
 #endif
             }
         }
 
-       
+
 
 
         private void Awake()
         {
-            
+
             // Référence à la caméra principale
-            
+
             //if (_mainCamera == null)
             //{
             //    _mainCamera = GameObject.FindGameObjectWithTag("MainCamera");
             //}
-            
+
         }
 
         IEnumerator Start()
@@ -174,7 +174,7 @@ namespace StarterAssets
 #if ENABLE_INPUT_SYSTEM && STARTER_ASSETS_PACKAGES_CHECKED
             _playerInput = GetComponent<PlayerInput>();
 #else
-			Debug.LogError( "Starter Assets package is missing dependencies. Please use Tools/Starter Assets/Reinstall Dependencies to fix it");
+            Debug.LogError("Starter Assets package is missing dependencies. Please use Tools/Starter Assets/Reinstall Dependencies to fix it");
 #endif
 
             AssignAnimationIDs();
@@ -256,13 +256,13 @@ namespace StarterAssets
         {
             if (!isLocalPlayer || !_mainCamera) return; //CinemachineCameraTarget
 
-        //    public float HeightOfCamera;
+            //    public float HeightOfCamera;
 
-        //[Tooltip("Select the width here")]
-        //public float WidthOfCamera;
+            //[Tooltip("Select the width here")]
+            //public float WidthOfCamera;
 
-        //[Tooltip("Select the angle here")]
-        //public float AngleOfCamera;
+            //[Tooltip("Select the angle here")]
+            //public float AngleOfCamera;
 
             // Positionner la caméra au-dessus du personnage
             Vector3 offset = new Vector3(0, HeightOfCamera, WidthOfCamera); // Ajustez la hauteur et la distance
@@ -469,7 +469,7 @@ namespace StarterAssets
             }
         }
 
-#endregion
+        #endregion
 
         #region ROLES
 

@@ -558,6 +558,8 @@ GameObject:
   - component: {fileID: 2166800401831811407}
   - component: {fileID: 2166800401831811392}
   - component: {fileID: 2166800401831811393}
+  - component: {fileID: -7382973606852457236}
+  - component: {fileID: 2022837574037694652}
   m_Layer: 8
   m_Name: Player
   m_TagString: Player
@@ -637,6 +639,7 @@ MonoBehaviour:
   syncDirection: 0
   syncMode: 0
   syncInterval: 0
+  CanMove: 1
   MoveSpeed: 2
   SprintSpeed: 5.335
   RotationSmoothTime: 0.12
@@ -874,6 +877,39 @@ MonoBehaviour:
   serverOnly: 0
   visibility: 2
   hasSpawned: 0
+--- !u!114 &-7382973606852457236
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2548500426481439643}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 908c2638b3d74894fac1096ae209f437, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  syncDirection: 0
+  syncMode: 0
+  syncInterval: 0
+  detectionRadius: 3
+  missionObjectTag: MissionObject
+  antivirusMissionUI: {fileID: 0}
+--- !u!114 &2022837574037694652
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2548500426481439643}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1d048c0f257ba1f4e8fa2a69923f103c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  syncDirection: 0
+  syncMode: 0
+  syncInterval: 0
 --- !u!1 &2651898197292205861
 GameObject:
   m_ObjectHideFlags: 0

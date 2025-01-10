@@ -32,6 +32,7 @@ namespace Assets.Scripts
             {
                 yield return null;
             }
+            Debug.Log("est ce que le server est actif mtn ?? " + NetworkServer.active);
             while (_players.Count != NetworkServer.connections.Count || !_players.TrueForAll(x => x.connectionToClient.isReady))
             {
                 yield return null;
