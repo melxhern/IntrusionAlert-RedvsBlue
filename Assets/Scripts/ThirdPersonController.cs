@@ -10,14 +10,16 @@ using UnityEngine.InputSystem;
 /* Note: animations are called via the controller for both the character and capsule using animator null checks
  */
 
-public enum PlayerRole
-{
-    BlueTeam = 0,
-    RedTeam
-}
+
 
 namespace StarterAssets
 {
+    public enum PlayerRole
+    {
+        BlueTeam = 0,
+        RedTeam
+    }
+     
     [RequireComponent(typeof(CharacterController))]
 #if ENABLE_INPUT_SYSTEM && STARTER_ASSETS_PACKAGES_CHECKED
     [RequireComponent(typeof(PlayerInput))]
@@ -102,6 +104,23 @@ namespace StarterAssets
         [Tooltip("Select the angle here")]
         public float AngleOfCamera;
 
+        [SyncVar]
+        public bool IsHoldingKey;
+
+        [Command(requiresAuthority=false)]
+        private void CmdUpdateIsHoldingKey(bool value)
+        {
+            IsHoldingKey = value;
+            RpcUpdateIsHoldingKey(value);
+        }
+
+        [ClientRpc]
+        private void RpcUpdateIsHoldingKey(bool value)
+        {
+            _personalUSBKey.SetActive(value);
+        }
+
+
         // cinemachine
         private float _cinemachineTargetYaw;
         private float _cinemachineTargetPitch;
@@ -133,6 +152,8 @@ namespace StarterAssets
         private StarterAssetsInputs _input;
         private GameObject _mainCamera;
 
+        private GameObject _personalUSBKey;
+
         private const float _threshold = 0.01f;
 
         private bool _hasAnimator;
@@ -154,6 +175,11 @@ namespace StarterAssets
 
         private void Awake()
         {
+            string path = "Skeleton/Hips/Spine/Chest/UpperChest/Right_Shoulder/Right_UpperArm/Right_LowerArm/Right_Hand/USBKey_Red";
+            _personalUSBKey = transform.Find(path).gameObject;
+
+            //hide the USB key
+            _personalUSBKey.SetActive(false);
 
             // Référence à la caméra principale
 
@@ -470,6 +496,21 @@ namespace StarterAssets
         }
 
         #endregion
+        [Command(requiresAuthority=false)]
+        public void PickUpUSBKey(uint netId)
+        {
+            CmdUpdateIsHoldingKey(true);
+
+            RpcDestroyObject(netId);
+            
+        }
+
+        [ClientRpc]
+        private void RpcDestroyObject(uint netId)
+        {
+            var obj = NetworkClient.spawned[netId].gameObject;
+            Destroy(obj);
+        }
 
         #region ROLES
 
@@ -479,5 +520,10 @@ namespace StarterAssets
 
 
         #endregion
+
+        public PlayerRole GetRole()
+        {
+            return Role;
+        }
     }
 }

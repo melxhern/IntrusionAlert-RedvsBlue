@@ -1152,6 +1152,7 @@ MonoBehaviour:
   HeightOfCamera: 0
   WidthOfCamera: 0
   AngleOfCamera: 0
+  IsHoldingKey: 0
 --- !u!114 &5885216827943657505
 MonoBehaviour:
   m_ObjectHideFlags: 0

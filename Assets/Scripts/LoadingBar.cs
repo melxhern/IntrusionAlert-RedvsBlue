@@ -50,18 +50,45 @@ public class LoadingBar : MonoBehaviour
         //     MalwareManager malwareManager = FindObjectOfType<MalwareManager>();
         //     malwareManager.ActivateMalware();
         // }
-        if (currentCanvas.name == "installing")
-        {
-            AntivirusManager antivirusManager = FindObjectOfType<AntivirusManager>();
-            if (antivirusManager == null)
-            {
-                Debug.LogError("AntivirusManager non trouvé dans la scène au niveau du loading.");
-                return;
-            }
-            Debug.Log("OnComplete antivirusManager found");
 
-            antivirusManager.ActivateAntivirus();
-            //antivirusManager.ShowAntivirusStatus();
+        //AntivirusManager antivirusManager = FindObjectOfType<AntivirusManager>();
+        //if (antivirusManager == null)
+        //{ 
+        //    Debug.LogError("AntivirusManager non trouvé dans la scène au niveau du loading.");
+        //    return;
+        //}
+        //Debug.Log("OnComplete antivirusManager found");
+
+        //antivirusManager.ActivateAntivirus();
+        //antivirusManager.ShowAntivirusStatus();
+         
+        var currentMissionObject = InteractMissionObject.currentMissionObject;
+        if (currentMissionObject == null) 
+        {
+            Debug.LogError("currentMissionObject not found");
+            return; 
+        }
+
+        var currentComputer = currentMissionObject.GetComponent<Computer>();
+        if (currentComputer == null)
+        {
+            Debug.LogError("currentComputer not found");
+            return;
+        }
+
+        Debug.Log("current status " + currentComputer.currentStatus);
+
+        if (currentComputer.currentStatus == 1)
+        {
+            if (currentComputer.currentStatus != 2){
+                currentComputer.CmdComputerProtected();
+                Debug.Log("Computer protected");
+            }
+        }
+        else if (currentComputer.currentStatus == -1)
+        {
+            currentComputer.CmdComputerPirated();
+            Debug.Log("Computer pirated");
         }
 
     }

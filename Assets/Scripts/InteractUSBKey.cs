@@ -8,21 +8,21 @@ using System.Linq;
 public class InteractUSBKey : MonoBehaviour
 {
 
-    // public float detectionRadius = 1f; // Rayon de détection
+    public float detectionRadius = 100f; // Rayon de détection
 
-    // public string keyTag = "MalwareKey"; // Tag des objets détectables
-    // public string antivirusTag = "MissionObject"; // Tag des objets détectables
+    public string keyTag = "MalwareKey"; // Tag des objets détectables
+    public string antivirusTag = "MissionObject"; // Tag des objets détectables
 
-    // public static GameObject currentMissionObject = null; // L'objet actuellement sélectionné
-    // public GameObject playerRightHand;
-    // public GameObject malwareCanvas;
-    // public GameObject protectedCanvas;
-    // public GameObject antivirusUI;
+    public static GameObject currentMissionObject = null; // L'objet actuellement sélectionné
+    public GameObject playerRightHand;
+    public GameObject malwareCanvas;
+    public GameObject protectedCanvas;
+    public GameObject antivirusUI;
 
-    // private GameObject heldObject = null; // L'objet actuellement tenu dans la main
+    private GameObject heldObject = null; // L'objet actuellement tenu dans la main
 
-    // private bool isProtected = false;
-    // public LoadingBar loadingBarScript; // Référence au script LoadingBar
+    private bool isProtected = false;
+    public LoadingBar loadingBarScript; // Référence au script LoadingBar
 
     // private MalwareManager malwareManager;
 
@@ -37,116 +37,116 @@ public class InteractUSBKey : MonoBehaviour
     //     }
     // }
 
-    // // Update is called once per frame
-    // void Update()
-    // {
-    //     Collider[] hitColliders = Physics.OverlapSphere(transform.position, detectionRadius);
+    // Update is called once per frame
+    void Update()
+    {
+        //Collider[] hitColliders = Physics.OverlapSphere(transform.position, detectionRadius);
 
-    //     GameObject closestObject = null;
-    //     float closestDistance = detectionRadius;
+        //GameObject closestObject = null;
+        
+        //float closestDistance = detectionRadius;
 
-    //     // Parcourir les objets détectés
-    //     foreach (var hitCollider in hitColliders)
-    //     {
+        //Debug.Log(detectionRadius);
 
-    //         GameObject detectedObject = hitCollider.gameObject;
+        //// Parcourir les objets détectés
+        //foreach (var hitCollider in hitColliders)
+        //{
+        //    Debug.Log("dsssssssssssss");
 
-    //         // Ignore l'objet actuellement tenu dans la main
-    //         if (detectedObject == heldObject)
-    //             continue;
+        //    GameObject detectedObject = hitCollider.gameObject;
 
-    //         if (detectedObject.CompareTag(keyTag) || detectedObject.CompareTag(antivirusTag))
-    //         {
-    //             float distance = Vector3.Distance(transform.position, detectedObject.transform.position);
-    //             if (distance < closestDistance)
-    //             {
-    //                 closestDistance = distance;
-    //                 closestObject = detectedObject;
-    //             }
-    //         }
-    //     }
+        //    // Ignore l'objet actuellement tenu dans la main
+        //    if (detectedObject == heldObject)
+        //        continue;
 
-    //     // Mettre à jour l'outline
-    //     if (currentMissionObject != null && currentMissionObject != closestObject)
-    //     {
-    //         currentMissionObject.GetComponent<Outline>().enabled = false;
-    //     }
+        //    if (detectedObject.CompareTag(keyTag) || detectedObject.CompareTag(antivirusTag))
+        //    {
+        //        Debug.Log($"Objet détecté : {detectedObject.name}");
+        //        float distance = Vector3.Distance(transform.position, detectedObject.transform.position);
+        //        if (distance < closestDistance)
+        //        {
+        //            closestDistance = distance;
+        //            closestObject = detectedObject;
+        //        }
+        //    }
+        //}
 
-    //     if (closestObject != null)
-    //     {
-    //         currentMissionObject = closestObject;
-    //         currentMissionObject.GetComponent<Outline>().enabled = true;
-    //     }
-    //     else
-    //     {
-    //         currentMissionObject = null;
-    //     }
+        //// Mettre à jour l'outline
+        //if (InteractMissionObject.currentMissionObject != null && InteractMissionObject.currentMissionObject != closestObject)
+        //{
+        //    InteractMissionObject.currentMissionObject.GetComponent<Outline>().enabled = false;
+        //}
 
-    //     // Détecter un clic gauche sur l'objet détecté
-    //     if (Mouse.current.leftButton.wasPressedThisFrame && currentMissionObject != null)
-    //     {
+        //if (closestObject != null)
+        //{
+        //    InteractMissionObject.currentMissionObject = closestObject;
+        //    InteractMissionObject.currentMissionObject.GetComponent<Outline>().enabled = true;
+        //}
+        //else
+        //{
+        //    InteractMissionObject.currentMissionObject = null;
+        //}
 
-    //         // Si un objet "MalwareKey" est détecté et cliqué
-    //         if (currentMissionObject != null && currentMissionObject.CompareTag(keyTag))
-    //         {
-    //             PickUpUSBKey();
-    //         }
+        //// Détecter un clic gauche sur l'objet détecté
+        //if (Mouse.current.leftButton.wasPressedThisFrame && InteractMissionObject.currentMissionObject != null)
+        //{
 
-    //         // Si un objet "AntivirusMissionObject" est détecté et cliqué
-    //         if (currentMissionObject != null && currentMissionObject.CompareTag(antivirusTag))
-    //         {
-    //             InteractWithAntivirusObject();
-    //         }
+        //    // Si un objet "MalwareKey" est détecté et cliqué
+        //    if (InteractMissionObject.currentMissionObject != null && InteractMissionObject.currentMissionObject.CompareTag(keyTag))
+        //    {
+        //        PickUpUSBKey();
+        //    }
 
-
-    //     }
-    // }
-
-    // void PickUpUSBKey()
-    // {
-    //     heldObject = currentMissionObject; // Assigne l'objet tenu
-    //     heldObject.transform.SetParent(playerRightHand.transform);
-    //     heldObject.transform.localPosition = Vector3.zero;
-    // }
-
-    // void InteractWithAntivirusObject()
-    // {
-    //     // Vérifie si un ordinateur est sélectionné
-    //     if (currentMissionObject == null || heldObject == null || !heldObject.CompareTag(keyTag))
-    //         return;
+        //    // Si un objet "AntivirusMissionObject" est détecté et cliqué
+        //    if (InteractMissionObject.currentMissionObject != null && InteractMissionObject.currentMissionObject.CompareTag(antivirusTag))
+        //    {
+        //        InteractWithAntivirusObject();
+        //    }
 
 
-    //     // Vérifie si l'ordinateur est protégé
-    //     isProtected = FindObjectOfType<AntivirusManager>().IsComputerProtected(currentMissionObject);
+        //}
+    }
 
-    //     if (malwareManager != null && malwareManager.IsInfected(currentMissionObject))
-    //     {
-    //         Debug.Log($"JE SUIS ICIIIIIIIIIIII L'ordinateur {currentMissionObject.name} est déjà infecté.");
+    
 
-    //         GameObject malware = antivirusUI.transform.Find("malware").gameObject;
-    //         malware.gameObject.SetActive(true);
-    //     }
-    //     else
-    //     {
-    //         // Verif que tout est bien fermé avant de lancer la barre de chargement
-    //         GameObject malwareUI = antivirusUI.transform.Find("malware").gameObject;
-    //         malwareUI.gameObject.SetActive(false);
-    //         GameObject protectedUI = antivirusUI.transform.Find("protected").gameObject;
-    //         protectedUI.gameObject.SetActive(false);
-
-    //         // Déclenche la barre de chargement
-    //         GameObject usbUI = antivirusUI.transform.Find("usbInserted").gameObject;
-    //         usbUI.gameObject.SetActive(true);
-
-    //         loadingBarScript.currentCanvas = usbUI; // Canvas actuel
-    //         loadingBarScript.canvasToShow = isProtected ? protectedCanvas : malwareCanvas; // Canvas final
-    //         loadingBarScript.enabled = true; // Active la logique de chargement
-    //         loadingBarScript.AnimateBar(); // Démarre l'animation de la barre de chargement
-
-    //         //malwareManager.ActivateMalware();
-    //     }
+    void InteractWithAntivirusObject()
+    {
+        // Vérifie si un ordinateur est sélectionné
+        //if (currentMissionObject == null || heldObject == null || !heldObject.CompareTag(keyTag))
+        //    return;
 
 
-    // }
+        //// Vérifie si l'ordinateur est protégé
+        //isProtected = FindObjectOfType<AntivirusManager>().IsComputerProtected(currentMissionObject);
+
+        //if (malwareManager != null && malwareManager.IsInfected(currentMissionObject))
+        //{
+        //    Debug.Log($"JE SUIS ICIIIIIIIIIIII L'ordinateur {currentMissionObject.name} est déjà infecté.");
+
+        //    GameObject malware = antivirusUI.transform.Find("malware").gameObject;
+        //    malware.gameObject.SetActive(true);
+        //}
+        //else
+        //{
+        //    // Verif que tout est bien fermé avant de lancer la barre de chargement
+        //    GameObject malwareUI = antivirusUI.transform.Find("malware").gameObject;
+        //    malwareUI.gameObject.SetActive(false);
+        //    GameObject protectedUI = antivirusUI.transform.Find("protected").gameObject;
+        //    protectedUI.gameObject.SetActive(false);
+
+        //    // Déclenche la barre de chargement
+        //    GameObject usbUI = antivirusUI.transform.Find("usbInserted").gameObject;
+        //    usbUI.gameObject.SetActive(true);
+
+        //    loadingBarScript.currentCanvas = usbUI; // Canvas actuel
+        //    loadingBarScript.canvasToShow = isProtected ? protectedCanvas : malwareCanvas; // Canvas final
+        //    loadingBarScript.enabled = true; // Active la logique de chargement
+        //    loadingBarScript.AnimateBar(); // Démarre l'animation de la barre de chargement
+
+        //    //malwareManager.ActivateMalware();
+        //}
+
+
+    }
 
 }
