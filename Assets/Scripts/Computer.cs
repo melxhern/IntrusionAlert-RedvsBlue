@@ -29,12 +29,12 @@ public class Computer : NetworkBehaviour
         //    CmdStopProtection();
         //}
 
-        
+
 
         var thirdPersonController = player.GetComponent<ThirdPersonController>();
         var role = thirdPersonController.GetRole();
         var computerUI = Resources.FindObjectsOfTypeAll<GameObject>()
-            .FirstOrDefault(obj => obj.name == "computerUI"); // permet de trouver l'objet même si désactivé
+            .FirstOrDefault(obj => obj.name == "computerUI"); // permet de trouver l'objet mï¿½me si dï¿½sactivï¿½
         if (computerUI == null)
         {
             Debug.LogError("L'UI AntivirusMissionUI est introuvable !");
@@ -70,11 +70,8 @@ public class Computer : NetworkBehaviour
             {
                 Debug.Log("No interaction UI");
                 computerUIManager.NoInteractionUI();
-            } 
+            }
         }
-
-
-
 
     }
 

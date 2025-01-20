@@ -51,7 +51,6 @@ public class InteractUSBKey : MonoBehaviour
         //// Parcourir les objets détectés
         //foreach (var hitCollider in hitColliders)
         //{
-        //    Debug.Log("dsssssssssssss");
 
         //    GameObject detectedObject = hitCollider.gameObject;
 
@@ -121,7 +120,6 @@ public class InteractUSBKey : MonoBehaviour
 
         //if (malwareManager != null && malwareManager.IsInfected(currentMissionObject))
         //{
-        //    Debug.Log($"JE SUIS ICIIIIIIIIIIII L'ordinateur {currentMissionObject.name} est déjà infecté.");
 
         //    GameObject malware = antivirusUI.transform.Find("malware").gameObject;
         //    malware.gameObject.SetActive(true);

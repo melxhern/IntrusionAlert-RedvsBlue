@@ -2860,13 +2860,49 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: -41.732
       objectReference: {fileID: 0}
+    - target: {fileID: 2980109870570319633, guid: ac289c334f1e2554fa2c3f187a354c4c,
+        type: 3}
+      propertyPath: _assetId
+      value: 1443552441
+      objectReference: {fileID: 0}
     - target: {fileID: 5744863153179321896, guid: ac289c334f1e2554fa2c3f187a354c4c,
         type: 3}
       propertyPath: m_Name
       value: USBKey_Red
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    - target: {fileID: 8770584870722609614, guid: ac289c334f1e2554fa2c3f187a354c4c,
+        type: 3}
+      propertyPath: _assetId
+      value: 1443552441
+      objectReference: {fileID: 0}
+    m_RemovedComponents:
+    - {fileID: 8770584870722609614, guid: ac289c334f1e2554fa2c3f187a354c4c, type: 3}
+    - {fileID: 2980109870570319633, guid: ac289c334f1e2554fa2c3f187a354c4c, type: 3}
   m_SourcePrefab: {fileID: 100100000, guid: ac289c334f1e2554fa2c3f187a354c4c, type: 3}
+--- !u!1 &6798981254675963737 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 4413962715270152843, guid: ac289c334f1e2554fa2c3f187a354c4c,
+    type: 3}
+  m_PrefabInstance: {fileID: 7141405923330694610}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &6642279387532430014
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6798981254675963737}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5fea29bb7c508c244a1f805a5fd3fc4d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  outlineMode: 0
+  outlineColor: {r: 0.9169811, g: 0.11592023, b: 0.11592023, a: 1}
+  outlineWidth: 2
+  precomputeOutline: 0
+  bakeKeys: []
+  bakeValues: []
 --- !u!4 &7845507155593965873 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 1151665765339475171, guid: ac289c334f1e2554fa2c3f187a354c4c,
