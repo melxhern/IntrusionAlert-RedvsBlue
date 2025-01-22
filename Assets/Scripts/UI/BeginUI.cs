@@ -10,6 +10,8 @@ public class BeginUI : MonoBehaviour
 {
     public CanvasGroup Group;
     public TMP_Text RoleText;
+    public TMP_Text Postit;
+    public GameObject Panel;
     
     // Start is called before the first frame update
     void Start()
@@ -24,10 +26,23 @@ public class BeginUI : MonoBehaviour
 
     private void OnGameStart()
     {
+        //Panel.SetActive(false);
         ThirdPersonController player = ThirdPersonController.Local;
         RoleText.text = $"You are {player.Role.ToString().ToLower()}";
 
         StartCoroutine(DoFade());
+
+        StartCoroutine(WaitAndShowPanel(4f));
+
+        
+       // Panel.SetActive(true);
+
+
+        if( player.Role.ToString() == "RedTeam")  Postit.text="Votre rôle protéger le réseau interne, \nvotre mission vérifier et mettre en place les firewalls";
+
+        if( player.Role.ToString() == "BlueTeam")  Postit.text="Votre rôle entrer dans le réseau interne, \nvotre mission inserer dans les ordinateurs non protéger les clés USB inféctées.";
+      
+        
     }
 
     private IEnumerator DoFade()
@@ -45,4 +60,10 @@ public class BeginUI : MonoBehaviour
         Group.blocksRaycasts = false;
         Group.interactable = false;
     }
+
+    private IEnumerator WaitAndShowPanel(float waitTime)
+{
+    yield return new WaitForSeconds(waitTime);
+    if (Panel != null) Panel.SetActive(true);
+}
 }
