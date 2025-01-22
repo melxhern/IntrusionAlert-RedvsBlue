@@ -64,7 +64,8 @@ public class InteractMissionObject : NetworkBehaviour
         // Parcourir les objets détectés
         foreach (var hitCollider in hitColliders)
         {
-            if (hitCollider.CompareTag(missionObjectTag) || hitCollider.CompareTag(keyTag))
+            var role = gameObject.GetComponent<ThirdPersonController>().GetRole();
+            if (hitCollider.CompareTag(missionObjectTag) || (hitCollider.CompareTag(keyTag) && role == PlayerRole.RedTeam))
             {
                 if (hitCollider.CompareTag(keyTag) && gameObject.GetComponent<ThirdPersonController>().IsHoldingKey) continue;
                 float distance = Vector3.Distance(transform.position, hitCollider.transform.position);
@@ -116,7 +117,7 @@ public class InteractMissionObject : NetworkBehaviour
             if (currentMissionObject.CompareTag(keyTag))
             {
 
-                player.GetComponent<ThirdPersonController>().PickUpUSBKey(currentMissionObjectNetId);
+                player.GetComponent<ThirdPersonController>().CmdPickUpUSBKey(currentMissionObjectNetId);
             }
             else
             {

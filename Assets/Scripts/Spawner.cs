@@ -3,20 +3,24 @@ using System.Collections.Generic;
 using UnityEngine;
 using Mirror;
 
-public class Spawner : MonoBehaviour
+public class Spawner : NetworkBehaviour
 {
     //public GameObject gameManagerPrefab; // Assigné dans l'Inspector
     public GameObject usbKeyPrefab; // Prefab de la clé USB à assigner dans l'Inspector
     public int usbKeysPerTable = 1; // Nombre de clés USB à spawner par table
 
-    void Start()
+    public override void OnStartServer()
     {
+        base.OnStartServer();
+        Debug.LogError("Heyyyyyyy");
         // S'assurer que ce script ne fonctionne que sur le serveur
         if (!NetworkServer.active)
         {
             Debug.LogWarning("Spawner: This script should only be executed on the server.");
             return;
         }
+
+        Debug.LogError("Heyyyyyyy");
 
         //SpawnGameManager();
         SpawnUSBKeysOnTables();
@@ -45,13 +49,18 @@ public class Spawner : MonoBehaviour
     /// <summary>
     /// Spawne des clés USB aléatoirement sur les tables de la scène.
     /// </summary>
+    [Server]
     void SpawnUSBKeysOnTables()
     {
+        Debug.LogError("AHHH");
+
         if (usbKeyPrefab == null)
         {
             Debug.LogError("Spawner: USB Key prefab is not assigned in the Inspector!");
             return;
         }
+
+
 
         // Recherche toutes les tables dans la scène
         GameObject[] tables = GameObject.FindGameObjectsWithTag("Table");
@@ -73,10 +82,31 @@ public class Spawner : MonoBehaviour
 
                 // Instancie et spawne la clé USB
                 GameObject usbKeyInstance = Instantiate(usbKeyPrefab, spawnPosition, Quaternion.identity);
+                //usbKeyInstance.AddComponent<NetworkIdentity>();
+                //usbKeyInstance.AddComponent<Outline>();
+                // Outline outline = usbKeyInstance.GetComponent<Outline>();
+                // if (outline != null)
+                // {
+                //     outline.enabled = false;
+                // }
+
+                usbKeyInstance.tag = "MalwareKey";
                 NetworkServer.Spawn(usbKeyInstance);
+                RpcMirrorUSBKey(usbKeyInstance.GetComponent<NetworkIdentity>());
 
                 Debug.Log($"Spawner: Spawned USB Key at {spawnPosition} on table {table.name}.");
             }
+        }
+    }
+
+    [ClientRpc]
+    void RpcMirrorUSBKey(NetworkIdentity usbKeyIdentity)
+    {
+        if (usbKeyIdentity != null)
+        {
+            usbKeyIdentity.gameObject.SetActive(true);
+
+            Debug.Log("Bouh");
         }
     }
 

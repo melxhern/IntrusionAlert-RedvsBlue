@@ -497,7 +497,7 @@ namespace StarterAssets
 
         #endregion
         [Command(requiresAuthority=false)]
-        public void PickUpUSBKey(uint netId)
+        public void CmdPickUpUSBKey(uint netId)
         {
             CmdUpdateIsHoldingKey(true);
 
