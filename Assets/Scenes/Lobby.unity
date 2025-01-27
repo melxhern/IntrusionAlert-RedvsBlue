@@ -1001,7 +1001,7 @@ GameObject:
   - component: {fileID: 793613421}
   - component: {fileID: 793613420}
   m_Layer: 5
-  m_Name: Text (TMP) (2)
+  m_Name: 'Text (TMP) red team '
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1047,8 +1047,8 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: "Equipe rouge : votre mission utiliser les cl\xE9s USB inf\xE9ct\xE9es
-    pour infiltrer le r\xE9seau interne de l'entreprise "
+  m_text: "Equipe rouge : votre mission utiliser les failles existantes pour infecter
+    le r\xE9seau interne de l'entreprise "
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 7181ba1b9f04c8a4982c28aa1e1bb9de, type: 2}
   m_sharedMaterial: {fileID: 8356062400512467017, guid: 7181ba1b9f04c8a4982c28aa1e1bb9de,
@@ -2431,7 +2431,7 @@ GameObject:
   - component: {fileID: 1477269051}
   - component: {fileID: 1477269050}
   m_Layer: 5
-  m_Name: Text (TMP) (3)
+  m_Name: 'Text (TMP) blue team '
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -2477,8 +2477,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: "Equipe bleue : votre mission s\xE9curisez les ordinateurs en v\xE9rifiant
-    que les antivirus sont en place."
+  m_text: "Equipe bleue : votre mission s\xE9curisez le r\xE9seau interne de l'entreprise."
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 7181ba1b9f04c8a4982c28aa1e1bb9de, type: 2}
   m_sharedMaterial: {fileID: 8356062400512467017, guid: 7181ba1b9f04c8a4982c28aa1e1bb9de,
