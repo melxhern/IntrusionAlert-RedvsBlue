@@ -2,6 +2,9 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using System.Linq;
+using StarterAssets;
+using Mirror;
 
 public class loadingbar : MonoBehaviour
 {
@@ -24,6 +27,7 @@ public class loadingbar : MonoBehaviour
 
     void Update()
     {
+
         if (imageComp.fillAmount != 1f)
         {
             imageComp.fillAmount = imageComp.fillAmount + Time.deltaTime * speed;
@@ -57,19 +61,25 @@ public class loadingbar : MonoBehaviour
         }
 
         Debug.Log("current status " + currentComputer.currentStatus);
-
-        if (currentComputer.currentStatus == 1)
-        {
-            if (currentComputer.currentStatus != 2)
-            {
-                currentComputer.CmdComputerProtected();
-                Debug.Log("Computer protected");
-            }
-        }
-        else if (currentComputer.currentStatus == -1)
+        Debug.Log("current status in on complete " + currentComputer.currentStatus);
+        if (currentComputer.currentStatus == -1)
         {
             currentComputer.CmdComputerPirated();
             Debug.Log("Computer pirated");
+            var player = NetworkClient.localPlayer?.gameObject.GetComponent<ThirdPersonController>();
+            if (player != null)
+            {
+                player.CmdUpdateIsHoldingKey(false); // Met à jour correctement la valeur
+            }
+            else
+            {
+                Debug.LogError("ThirdPersonController introuvable sur l'objet du joueur.");
+            }
+        }
+        else if (currentComputer.currentStatus != 2)
+        {
+            currentComputer.CmdComputerProtected();
+            Debug.Log("Computer protected");
         }
 
     }

@@ -19,7 +19,7 @@ namespace StarterAssets
         BlueTeam = 0,
         RedTeam
     }
-     
+
     [RequireComponent(typeof(CharacterController))]
 #if ENABLE_INPUT_SYSTEM && STARTER_ASSETS_PACKAGES_CHECKED
     [RequireComponent(typeof(PlayerInput))]
@@ -107,8 +107,8 @@ namespace StarterAssets
         [SyncVar]
         public bool IsHoldingKey;
 
-        [Command(requiresAuthority=false)]
-        private void CmdUpdateIsHoldingKey(bool value)
+        [Command(requiresAuthority = false)]
+        public void CmdUpdateIsHoldingKey(bool value)
         {
             IsHoldingKey = value;
             RpcUpdateIsHoldingKey(value);
@@ -496,13 +496,13 @@ namespace StarterAssets
         }
 
         #endregion
-        [Command(requiresAuthority=false)]
+        [Command(requiresAuthority = false)]
         public void CmdPickUpUSBKey(uint netId)
         {
             CmdUpdateIsHoldingKey(true);
 
             RpcDestroyObject(netId);
-            
+
         }
 
         [ClientRpc]

@@ -3350,9 +3350,9 @@ RectTransform:
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: -314.73718, y: 152.4178}
-  m_SizeDelta: {x: -617.9188, y: -284.0351}
+  m_AnchorMax: {x: 0, y: 0}
+  m_AnchoredPosition: {x: 103.48892, y: 393.52155}
+  m_SizeDelta: {x: 206.9777, y: 195.9522}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &523212062
 MonoBehaviour:
@@ -3368,14 +3368,14 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
-  m_RaycastTarget: 1
+  m_RaycastTarget: 0
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
   m_Sprite: {fileID: 21300000, guid: 7cf4d92fd39b333449f2a64bf787c02b, type: 3}
-  m_Type: 1
+  m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
   m_FillMethod: 4
@@ -8657,7 +8657,6 @@ GameObject:
   - component: {fileID: 1433689725}
   - component: {fileID: 1433689729}
   - component: {fileID: 1433689730}
-  - component: {fileID: 1433689731}
   m_Layer: 5
   m_Name: computerUI
   m_TagString: Untagged
@@ -8784,22 +8783,6 @@ MonoBehaviour:
   hackedUI: {fileID: 571064527}
   notHackedUI: {fileID: 2026930622}
   protectedLogUIElement: {fileID: 0}
---- !u!114 &1433689731
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1433689724}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 87340972315cf5b4d922bddc52171953, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  loadingBar: {fileID: 0}
-  canvasToShow: {fileID: 0}
-  currentCanvas: {fileID: 0}
-  time: 5
 --- !u!1 &1457139313 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 3623902949984415524, guid: 2ddc17aa5214a044ba512f4e7810dcd1,
@@ -9073,18 +9056,6 @@ MonoBehaviour:
           m_FloatArgument: 0
           m_StringArgument: 
           m_BoolArgument: 0
-        m_CallState: 2
-      - m_Target: {fileID: 1846496831}
-        m_TargetAssemblyTypeName: LoadingBar, Assembly-CSharp
-        m_MethodName: AnimateBar
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 1
         m_CallState: 2
       - m_Target: {fileID: -7382973606852457236, guid: 20e6fd7c0066df046b2bbf51c80a57f8,
           type: 3}
@@ -9620,7 +9591,6 @@ GameObject:
   - component: {fileID: 1631555374}
   - component: {fileID: 1631555375}
   - component: {fileID: 1647344840}
-  - component: {fileID: 1846496831}
   m_Layer: 5
   m_Name: installing
   m_TagString: Untagged
@@ -9715,7 +9685,7 @@ BoxCollider:
   m_GameObject: {fileID: 1631555373}
   m_Material: {fileID: 0}
   m_IsTrigger: 0
-  m_Enabled: 1
+  m_Enabled: 0
   serializedVersion: 2
   m_Size: {x: 2, y: 2, z: 2}
   m_Center: {x: 0, y: 0, z: 0}
@@ -10781,22 +10751,6 @@ MonoBehaviour:
   serverOnly: 0
   visibility: 0
   hasSpawned: 0
---- !u!114 &1846496831
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1631555373}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 87340972315cf5b4d922bddc52171953, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  loadingBar: {fileID: 0}
-  canvasToShow: {fileID: 1457733584}
-  currentCanvas: {fileID: 1631555373}
-  time: 5
 --- !u!1 &1868704265 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 4416926081852918481, guid: 64dce48905ffd9b4293e595fa6941544,
@@ -11165,22 +11119,14 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 100, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}
---- !u!114 &1975235480
-MonoBehaviour:
+--- !u!222 &1975235480
+CanvasRenderer:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1975235478}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 87340972315cf5b4d922bddc52171953, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  loadingBar: {fileID: 0}
-  canvasToShow: {fileID: 571064527}
-  currentCanvas: {fileID: 1975235478}
-  time: 5
+  m_CullTransparentMesh: 1
 --- !u!1001 &1979352518
 PrefabInstance:
   m_ObjectHideFlags: 0

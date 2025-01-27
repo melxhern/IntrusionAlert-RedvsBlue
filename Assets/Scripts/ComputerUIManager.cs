@@ -21,7 +21,7 @@ public class ComputerUIManager : MonoBehaviour
 
     private void ClearAllUI()
     {
-        computerUI.SetActive(false); 
+        computerUI.SetActive(false);
         startUI.SetActive(false);
         protectedUI.SetActive(false);
         backgroundUI.SetActive(false);
@@ -43,14 +43,13 @@ public class ComputerUIManager : MonoBehaviour
         backgroundUI.SetActive(true);
         hackingUI.SetActive(true);
 
-        
         var usbUI = computerUI.transform.Find("usbInserted").gameObject;
-        var loadingScript = usbUI.GetComponent<LoadingBar>();
+        var usbLoadUI = computerUI.transform.Find("usbInserted/loading/vica").gameObject;
+        var loadingScript = usbLoadUI.GetComponent<loadingbar>();
 
         loadingScript.currentCanvas = usbUI; // Canvas actuel
-        loadingScript.canvasToShow = isProtected ? protectedUI : hackedUI; // Canvas final
+        loadingScript.canvasToShow = isProtected ? notHackedUI : hackedUI; // Canvas final
         loadingScript.enabled = true; // Active la logique de chargement
-        loadingScript.AnimateBar(); // Démarre l'animation de la barre de chargement
     }
 
     public void HackedUI()

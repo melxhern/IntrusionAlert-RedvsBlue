@@ -44,12 +44,15 @@ public class Computer : NetworkBehaviour
 
         if (currentStatus == -2)
         {
+            Debug.Log("Hacked UI" + currentStatus);
             computerUIManager.HackedUI();
             return;
         }
 
         if (role == PlayerRole.BlueTeam)
         {
+            Debug.Log("end of protection time: " + endOfProtectionTime);
+            Debug.Log("network time: " + NetworkTime.time);
             if (endOfProtectionTime > NetworkTime.time)
             {
                 computerUIManager.ProtectedUI(gameObject);
