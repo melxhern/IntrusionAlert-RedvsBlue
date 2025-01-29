@@ -49,13 +49,14 @@ public class Computer : NetworkBehaviour
             return;
         }
 
+
         if (role == PlayerRole.BlueTeam)
         {
             Debug.Log("end of protection time: " + endOfProtectionTime);
             Debug.Log("network time: " + NetworkTime.time);
             if (endOfProtectionTime > NetworkTime.time)
             {
-                computerUIManager.ProtectedUI(gameObject);
+                computerUIManager.ProtectedUI(gameObject, endOfProtectionTime);
             }
             else
             {
@@ -64,6 +65,7 @@ public class Computer : NetworkBehaviour
         }
         else if (role == PlayerRole.RedTeam)
         {
+            Debug.Log("role : " + role);
             if (thirdPersonController.IsHoldingKey)
             {
                 computerUIManager.HackStartUI(endOfProtectionTime > NetworkTime.time);
@@ -115,6 +117,14 @@ public class Computer : NetworkBehaviour
         {
             currentStatus = -2;
         }
+
+        var gameResultManager = FindObjectOfType<GameResultManager>();
+        if (gameResultManager != null)
+        {
+            Debug.Log("Checking if all computers are hacked");
+            gameResultManager.CheckIfAllComputersHacked();
+        }
+
     }
 
     [Command(requiresAuthority = false)]

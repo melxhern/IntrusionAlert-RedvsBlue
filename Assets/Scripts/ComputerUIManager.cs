@@ -15,7 +15,7 @@ public class ComputerUIManager : MonoBehaviour
     public GameObject hackedUI;
     public GameObject notHackedUI;
 
-    public TMP_Text protectedLogUIElement;
+    //public TMP_Text protectedLogUIElement;
 
     // Start is called before the first frame update
 
@@ -60,14 +60,30 @@ public class ComputerUIManager : MonoBehaviour
         hackedUI.SetActive(true);
     }
 
-    public void ProtectedUI(GameObject computer)
+    public void ProtectedUI(GameObject computer, double endOfProtectionTime)
     {
+        // Active l'UI d'abord
         ClearAllUI();
         computerUI.SetActive(true);
         backgroundUI.SetActive(true);
         protectedUI.SetActive(true);
 
-        protectedLogUI.GetComponent<DynamicTextLoader>().openForComputer(computer);
+        Canvas.ForceUpdateCanvases();
+
+        // Calcul du temps restant
+        float timeRemaining = Mathf.Max(0, (float)(endOfProtectionTime - Mirror.NetworkTime.time));
+
+        // Mettre à jour l'UI avec un timer si nécessaire
+        var antivirusTimer = protectedUI.GetComponent<AntivirusTimer>();
+        if (antivirusTimer != null)
+        {
+            antivirusTimer.StartAntivirusTimer((float)Mirror.NetworkTime.time, (float)endOfProtectionTime);
+        }
+        else
+        {
+            Debug.LogError("AntivirusTimer script is missing on the protectedUI GameObject.");
+        }
+
     }
 
     public void NoInteractionUI()

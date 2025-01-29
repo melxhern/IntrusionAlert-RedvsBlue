@@ -4,7 +4,7 @@ using UnityEngine;
 using TMPro;
 using System;
 
-public class Timer : MonoBehaviour
+public class GameTimer : MonoBehaviour
 {
     [SerializeField] private float timeRemaining = 480;
     [SerializeField] private TextMeshProUGUI timerText;
@@ -35,7 +35,6 @@ public class Timer : MonoBehaviour
     private void StartTimer()
     {
         isGameStarted = true; // Démarre le timer lorsque la partie commence
-        Debug.Log("Timer started!");
     }
 
     private void UpdateTimerUI()
@@ -46,11 +45,30 @@ public class Timer : MonoBehaviour
         if (timeRemaining <= 10)
         {
             timerText.color = Color.red;
-            if (timeRemaining <= 0)
+
+        }
+        if (timeRemaining <= 10)
+        {
+            timerText.color = Color.red;
+        }
+
+        if (timeRemaining <= 0)
+        {
+            timeRemaining = 0;
+            Debug.Log("Time has run out!");
+
+            // Appelle le GameResultManager pour vérifier le résultat
+            var gameResultManager = FindObjectOfType<GameResultManager>();
+            if (gameResultManager != null)
             {
-                timeRemaining = 0;
-                Debug.Log("Time has run out!");
+                gameResultManager.CheckGameResult();
             }
+            else
+            {
+                Debug.LogError("GameResultManager introuvable dans la scène !");
+            }
+
+            isGameStarted = false; // Arrête le timer
         }
 
 

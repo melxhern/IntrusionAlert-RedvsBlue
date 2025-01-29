@@ -122,48 +122,6 @@ NavMeshSettings:
     debug:
       m_Flags: 0
   m_NavMeshData: {fileID: 0}
---- !u!1 &11575237 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 246904650448759738, guid: 4aa5f4b16f255aa49b07d197bdabf663,
-    type: 3}
-  m_PrefabInstance: {fileID: 1041339983}
-  m_PrefabAsset: {fileID: 0}
---- !u!114 &75949673 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 9153064734015702833, guid: 4aa5f4b16f255aa49b07d197bdabf663,
-    type: 3}
-  m_PrefabInstance: {fileID: 1041339983}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 4e29b1a8efbd4b44bb3f3716e73f07ff, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
---- !u!114 &255222319 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 3055012188854967601, guid: 4aa5f4b16f255aa49b07d197bdabf663,
-    type: 3}
-  m_PrefabInstance: {fileID: 1041339983}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: d199490a83bb2b844b9695cbf13b01ef, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
---- !u!114 &326391367 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 4883156122087719209, guid: 4aa5f4b16f255aa49b07d197bdabf663,
-    type: 3}
-  m_PrefabInstance: {fileID: 1041339983}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 4e29b1a8efbd4b44bb3f3716e73f07ff, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &352935487
 GameObject:
   m_ObjectHideFlags: 0
@@ -345,7 +303,8 @@ MonoBehaviour:
     type: 3}
   autoCreatePlayer: 1
   playerSpawnMethod: 1
-  spawnPrefabs: []
+  spawnPrefabs:
+  - {fileID: 5744863153179321896, guid: d413e8134e2a1a549ab442f1cc6a8151, type: 3}
   exceptionsDisconnect: 1
   snapshotSettings:
     bufferTimeMultiplier: 2
@@ -402,21 +361,9 @@ MonoBehaviour:
   MaximizeSocketBuffers: 1
   ReliableMaxMessageSize: 297433
   UnreliableMaxMessageSize: 1194
-  debugLog: 0
+  debugLog: 1
   statisticsGUI: 0
   statisticsLog: 0
---- !u!114 &929850860 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 452415965915747121, guid: 4aa5f4b16f255aa49b07d197bdabf663,
-    type: 3}
-  m_PrefabInstance: {fileID: 1041339983}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 4e29b1a8efbd4b44bb3f3716e73f07ff, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &943175369
 GameObject:
   m_ObjectHideFlags: 0
@@ -672,6 +619,21 @@ PrefabInstance:
         type: 3}
       propertyPath: m_AnchoredPosition.y
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 9153064732763193564, guid: 4aa5f4b16f255aa49b07d197bdabf663,
+        type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
+      objectReference: {fileID: 1041339984}
+    - target: {fileID: 9153064732763193564, guid: 4aa5f4b16f255aa49b07d197bdabf663,
+        type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: OnClickQuitButton
+      objectReference: {fileID: 0}
+    - target: {fileID: 9153064732763193564, guid: 4aa5f4b16f255aa49b07d197bdabf663,
+        type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
+      value: StarterMenuUI, Assembly-CSharp
       objectReference: {fileID: 0}
     - target: {fileID: 9153064732774281117, guid: 4aa5f4b16f255aa49b07d197bdabf663,
         type: 3}
@@ -1180,16 +1142,16 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 4aa5f4b16f255aa49b07d197bdabf663, type: 3}
---- !u!114 &1246184568 stripped
+--- !u!114 &1041339984 stripped
 MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 8212693004345580888, guid: 4aa5f4b16f255aa49b07d197bdabf663,
+  m_CorrespondingSourceObject: {fileID: 7279262697524349149, guid: 4aa5f4b16f255aa49b07d197bdabf663,
     type: 3}
   m_PrefabInstance: {fileID: 1041339983}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 5f7201a12d95ffc409449d95f23cf332, type: 3}
+  m_Script: {fileID: 11500000, guid: 031dee937378675448a9c3bf61648995, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!1001 &1835764794
@@ -1261,51 +1223,6 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 235c3b4ef4f35984fa93c327f5522139, type: 3}
---- !u!1 &1875771414 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 9153064732714998238, guid: 4aa5f4b16f255aa49b07d197bdabf663,
-    type: 3}
-  m_PrefabInstance: {fileID: 1041339983}
-  m_PrefabAsset: {fileID: 0}
---- !u!114 &1875771417
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1875771414}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: d92d7e5f8e8ad164f890e57a19a1223b, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  PanelStart: {fileID: 1889804113}
-  PanelStop: {fileID: 11575237}
-  buttonHost: {fileID: 75949673}
-  buttonServer: {fileID: 1981732479}
-  buttonClient: {fileID: 929850860}
-  buttonStop: {fileID: 326391367}
-  inputFieldAddress: {fileID: 255222319}
-  serverText: {fileID: 1924574534}
-  clientText: {fileID: 1246184568}
---- !u!1 &1889804113 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 7745931008956614986, guid: 4aa5f4b16f255aa49b07d197bdabf663,
-    type: 3}
-  m_PrefabInstance: {fileID: 1041339983}
-  m_PrefabAsset: {fileID: 0}
---- !u!114 &1924574534 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 1980246667106900174, guid: 4aa5f4b16f255aa49b07d197bdabf663,
-    type: 3}
-  m_PrefabInstance: {fileID: 1041339983}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 5f7201a12d95ffc409449d95f23cf332, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &1974422006
 GameObject:
   m_ObjectHideFlags: 0
@@ -1421,15 +1338,3 @@ MonoBehaviour:
   m_ShadowLayerMask: 1
   m_LightCookieSize: {x: 1, y: 1}
   m_LightCookieOffset: {x: 0, y: 0}
---- !u!114 &1981732479 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 2176388121233540286, guid: 4aa5f4b16f255aa49b07d197bdabf663,
-    type: 3}
-  m_PrefabInstance: {fileID: 1041339983}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 4e29b1a8efbd4b44bb3f3716e73f07ff, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 

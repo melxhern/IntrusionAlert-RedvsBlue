@@ -51,12 +51,15 @@ namespace Assets.Scripts
         private void OnStartGameReceived(StartGameMessage obj)
         {
             OnGameStarted?.Invoke();
-            Debug.LogError("Game started");
         }
 
         public void AddPlayer(ThirdPersonController player)
         {
             _players.Add(player);
         }
+
+
     }
+
+
 }

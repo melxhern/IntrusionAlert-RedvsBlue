@@ -1905,9 +1905,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 45aeac40189eb70459fda3e4c945cf67, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  MouseControllButton: {fileID: 0}
-  KeyboardMouseControllButton: {fileID: 0}
-  JoyStickButton: {fileID: 0}
+  MouseControllButton: {fileID: 9153064733228721617}
+  KeyboardMouseControllButton: {fileID: 9153064734209354432}
+  JoyStickButton: {fileID: 9153064733083022322}
 --- !u!1 &9153064732291663755
 GameObject:
   m_ObjectHideFlags: 0
@@ -3020,6 +3020,7 @@ GameObject:
   m_Component:
   - component: {fileID: 9153064732714998241}
   - component: {fileID: 9153064732714998240}
+  - component: {fileID: 8748626896163373165}
   m_Layer: 5
   m_Name: Online UI
   m_TagString: Untagged
@@ -3062,6 +3063,27 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   nicknameInputField: {fileID: 9153064733110007308}
+--- !u!114 &8748626896163373165
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 9153064732714998238}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d92d7e5f8e8ad164f890e57a19a1223b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  PanelStart: {fileID: 7745931008956614986}
+  PanelStop: {fileID: 246904650448759738}
+  buttonHost: {fileID: 9153064734015702833}
+  buttonServer: {fileID: 2176388121233540286}
+  buttonClient: {fileID: 452415965915747121}
+  buttonStop: {fileID: 4883156122087719209}
+  inputFieldAddress: {fileID: 3055012188854967601}
+  serverText: {fileID: 1980246667106900174}
+  clientText: {fileID: 8212693004345580888}
 --- !u!1 &9153064732725884807
 GameObject:
   m_ObjectHideFlags: 0
