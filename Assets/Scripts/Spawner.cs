@@ -12,7 +12,6 @@ public class Spawner : NetworkBehaviour
     public override void OnStartServer()
     {
         base.OnStartServer();
-        Debug.LogError("Heyyyyyyy");
         // S'assurer que ce script ne fonctionne que sur le serveur
         if (!NetworkServer.active)
         {
@@ -20,7 +19,6 @@ public class Spawner : NetworkBehaviour
             return;
         }
 
-        Debug.LogError("Heyyyyyyy");
 
         //SpawnGameManager();
         SpawnUSBKeysOnTables();
@@ -82,13 +80,6 @@ public class Spawner : NetworkBehaviour
 
                 // Instancie et spawne la clé USB
                 GameObject usbKeyInstance = Instantiate(usbKeyPrefab, spawnPosition, Quaternion.identity);
-                //usbKeyInstance.AddComponent<NetworkIdentity>();
-                //usbKeyInstance.AddComponent<Outline>();
-                // Outline outline = usbKeyInstance.GetComponent<Outline>();
-                // if (outline != null)
-                // {
-                //     outline.enabled = false;
-                // }
 
                 usbKeyInstance.tag = "MalwareKey";
                 NetworkServer.Spawn(usbKeyInstance);
@@ -106,7 +97,6 @@ public class Spawner : NetworkBehaviour
         {
             usbKeyIdentity.gameObject.SetActive(true);
 
-            Debug.Log("Bouh");
         }
     }
 

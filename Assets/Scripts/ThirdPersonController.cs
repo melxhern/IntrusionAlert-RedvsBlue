@@ -213,6 +213,7 @@ namespace StarterAssets
             {
                 Local = this;
                 _mainCamera = GameObject.FindGameObjectWithTag("MainCamera");
+                //DontDestroyOnLoad(gameObject);
             }
             if (GameManager.Instance)
             {

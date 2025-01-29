@@ -24,25 +24,31 @@ public class BeginUI : MonoBehaviour
         GameManager.OnGameStarted -= OnGameStart;
     }
 
+
     private void OnGameStart()
     {
+        StartCoroutine(InitializeUI());
+    }
+
+
+    private IEnumerator InitializeUI()
+    {
+        // Attends un court délai pour que les SyncVars soient propagées
+        yield return new WaitForSeconds(2);
+
         //Panel.SetActive(false);
         ThirdPersonController player = ThirdPersonController.Local;
-        RoleText.text = $"You are {player.Role.ToString().ToLower()}";
+        RoleText.text = $"Vous êtes {player.Role.ToString().ToLower()}";
+
+        // Panel.SetActive(true);
+
+        if (player.Role == PlayerRole.BlueTeam) Postit.text = "Votre rôle: protéger le réseau interne, \nVotre mission: vérifier et mettre en place les firewalls";
+
+        if (player.Role == PlayerRole.RedTeam) Postit.text = "Votre rôle: entrer dans le réseau interne, \nVotre mission: insérer dans les ordinateurs non protégés les clés USB inféctées.";
 
         StartCoroutine(DoFade());
 
         StartCoroutine(WaitAndShowPanel(4f));
-
-
-        // Panel.SetActive(true);
-
-
-        if (player.Role.ToString() == "RedTeam") Postit.text = "Votre rôle: protéger le réseau interne, \nVotre mission: vérifier et mettre en place les firewalls";
-
-        if (player.Role.ToString() == "BlueTeam") Postit.text = "Votre rôle: entrer dans le réseau interne, \nVotre mission: insérer dans les ordinateurs non protéger les clés USB inféctées.";
-
-
     }
 
     private IEnumerator DoFade()
