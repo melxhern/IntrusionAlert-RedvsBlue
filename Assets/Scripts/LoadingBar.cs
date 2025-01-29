@@ -6,7 +6,7 @@ using System.Linq;
 using StarterAssets;
 using Mirror;
 
-public class loadingbar : MonoBehaviour
+public class LoadingBar : MonoBehaviour
 {
 
     private RectTransform rectComponent;

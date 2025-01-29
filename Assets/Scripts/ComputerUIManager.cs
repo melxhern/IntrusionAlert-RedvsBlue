@@ -45,7 +45,7 @@ public class ComputerUIManager : MonoBehaviour
 
         var usbUI = computerUI.transform.Find("usbInserted").gameObject;
         var usbLoadUI = computerUI.transform.Find("usbInserted/loading/vica").gameObject;
-        var loadingScript = usbLoadUI.GetComponent<loadingbar>();
+        var loadingScript = usbLoadUI.GetComponent<LoadingBar>();
 
         loadingScript.currentCanvas = usbUI; // Canvas actuel
         loadingScript.canvasToShow = isProtected ? notHackedUI : hackedUI; // Canvas final

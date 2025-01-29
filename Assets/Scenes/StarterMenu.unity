@@ -266,7 +266,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 648699049}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 6442dc8070ceb41f094e44de0bf87274, type: 3}
   m_Name: 
@@ -361,7 +361,7 @@ MonoBehaviour:
   MaximizeSocketBuffers: 1
   ReliableMaxMessageSize: 297433
   UnreliableMaxMessageSize: 1194
-  debugLog: 1
+  debugLog: 0
   statisticsGUI: 0
   statisticsLog: 0
 --- !u!1 &943175369
