@@ -94,7 +94,7 @@ public class PlayerReady : NetworkBehaviour
     {
         if (isLocalPlayer && readyButton != null)
         {
-            readyButton.GetComponentInChildren<TMP_Text>().text = newState ? "Unready" : "Ready";
+            readyButton.GetComponentInChildren<TMP_Text>().text = newState ? "Prêt ?" : "Annuler";
         }
     }
 
