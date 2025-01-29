@@ -38,7 +38,7 @@ public class BeginUI : MonoBehaviour
 
         //Panel.SetActive(false);
         ThirdPersonController player = ThirdPersonController.Local;
-        RoleText.text = $"You are {player.Role.ToString().ToLower()}";
+        RoleText.text = $"Vous êtes {player.Role.ToString().ToLower()}";
 
         // Panel.SetActive(true);
 

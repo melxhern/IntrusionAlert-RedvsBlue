@@ -65,14 +65,14 @@ public class loadingbar : MonoBehaviour
             currentComputer.CmdComputerPirated();
             Debug.Log("Computer pirated");
             var player = NetworkClient.localPlayer?.gameObject.GetComponent<ThirdPersonController>();
-            // if (player != null)
-            // {
-            //     player.CmdUpdateIsHoldingKey(false); // Met à jour correctement la valeur
-            // }
-            // else
-            // {
-            //     Debug.LogError("ThirdPersonController introuvable sur l'objet du joueur.");
-            // }
+            if (player != null)
+            {
+                player.CmdUpdateIsHoldingKey(false); // Met à jour correctement la valeur
+            }
+            else
+            {
+                Debug.LogError("ThirdPersonController introuvable sur l'objet du joueur.");
+            }
         }
         else if (currentComputer.currentStatus != 2)
         {

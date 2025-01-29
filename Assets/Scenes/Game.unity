@@ -8532,6 +8532,16 @@ PrefabInstance:
       propertyPath: m_Name
       value: room3
       objectReference: {fileID: 0}
+    - target: {fileID: 5123821123502432948, guid: 32166e1472c8e1743b348aa89d2595f2,
+        type: 3}
+      propertyPath: m_TagString
+      value: Table
+      objectReference: {fileID: 0}
+    - target: {fileID: 5123821124107703742, guid: 32166e1472c8e1743b348aa89d2595f2,
+        type: 3}
+      propertyPath: m_TagString
+      value: Table
+      objectReference: {fileID: 0}
     - target: {fileID: 6570022666647657359, guid: 32166e1472c8e1743b348aa89d2595f2,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -12411,6 +12421,11 @@ PrefabInstance:
       propertyPath: antivirusLogText
       value: 
       objectReference: {fileID: 482907767}
+    - target: {fileID: 9042985436567650675, guid: a6557f924aff3f14c80c56b9f668a064,
+        type: 3}
+      propertyPath: antivirusDuration
+      value: 60
+      objectReference: {fileID: 0}
     - target: {fileID: 9042985436567650675, guid: a6557f924aff3f14c80c56b9f668a064,
         type: 3}
       propertyPath: antivirusMissionUI
