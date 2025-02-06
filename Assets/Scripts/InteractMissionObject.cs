@@ -20,7 +20,10 @@ public class InteractMissionObject : NetworkBehaviour
 
 
 
-
+    /// <summary>
+    /// Start is called before the first frame update.
+    /// Disables the script if the player is not local.
+    /// </summary>
     void Start()
     {
 
@@ -48,6 +51,10 @@ public class InteractMissionObject : NetworkBehaviour
         //}
     }
 
+    /// <summary>
+    /// Update is called once per frame.
+    /// Detects mission objects within the detection radius and handles interactions.
+    /// </summary>
     void Update()
     {
         if (!isLocalPlayer)
@@ -136,6 +143,9 @@ public class InteractMissionObject : NetworkBehaviour
 
     }
 
+    /// <summary>
+    /// Starts the protection process for the current mission object.
+    /// </summary>
     public void StartProtection()
     {
         //if (!isLocalPlayer)

@@ -9,6 +9,11 @@ public class AntivirusTimer : MonoBehaviour
     private float endOfProtectionTime;
     private bool isTimerActive = false;
 
+    /// <summary>
+    /// Starts the antivirus timer.
+    /// </summary>
+    /// <param name="networkTime">The current network time.</param>
+    /// <param name="protectionEndTime">The time when the protection ends.</param>
     public void StartAntivirusTimer(float networkTime, float protectionEndTime)
     {
         endOfProtectionTime = protectionEndTime;
@@ -16,6 +21,10 @@ public class AntivirusTimer : MonoBehaviour
         UpdateTimerUI(networkTime); // Met à jour immédiatement l'UI
     }
 
+    /// <summary>
+    /// Update is called once per frame.
+    /// Updates the timer if it is active.
+    /// </summary>
     private void Update()
     {
         if (isTimerActive)
@@ -36,6 +45,10 @@ public class AntivirusTimer : MonoBehaviour
         }
     }
 
+    /// <summary>
+    /// Updates the timer UI.
+    /// </summary>
+    /// <param name="timeRemaining">The remaining time to display.</param>
     private void UpdateTimerUI(float timeRemaining)
     {
         int minutes = Mathf.FloorToInt(timeRemaining / 60);

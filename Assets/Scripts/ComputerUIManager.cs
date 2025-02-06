@@ -17,8 +17,10 @@ public class ComputerUIManager : MonoBehaviour
 
     //public TMP_Text protectedLogUIElement;
 
-    // Start is called before the first frame update
 
+    /// <summary>
+    /// Clears all UI elements.
+    /// </summary>
     private void ClearAllUI()
     {
         computerUI.SetActive(false);
@@ -27,7 +29,9 @@ public class ComputerUIManager : MonoBehaviour
         backgroundUI.SetActive(false);
     }
 
-
+    /// <summary>
+    /// Activates the start UI.
+    /// </summary>
     public void StartUI()
     {
         ClearAllUI();
@@ -36,6 +40,10 @@ public class ComputerUIManager : MonoBehaviour
         startUI.SetActive(true);
     }
 
+    /// <summary>
+    /// Activates the hacking UI.
+    /// </summary>
+    /// <param name="isProtected">Indicates if the computer is protected.</param>
     public void HackStartUI(bool isProtected)
     {
         ClearAllUI();
@@ -52,6 +60,9 @@ public class ComputerUIManager : MonoBehaviour
         loadingScript.enabled = true; // Active la logique de chargement
     }
 
+    /// <summary>
+    /// Activates the hacked UI.
+    /// </summary>
     public void HackedUI()
     {
         ClearAllUI();
@@ -60,6 +71,11 @@ public class ComputerUIManager : MonoBehaviour
         hackedUI.SetActive(true);
     }
 
+    /// <summary>
+    /// Activates the protected UI and starts the antivirus timer.
+    /// </summary>
+    /// <param name="computer">The computer GameObject.</param>
+    /// <param name="endOfProtectionTime">The time when the protection ends.</param>
     public void ProtectedUI(GameObject computer, double endOfProtectionTime)
     {
         // Active l'UI d'abord
@@ -86,6 +102,9 @@ public class ComputerUIManager : MonoBehaviour
 
     }
 
+    /// <summary>
+    /// Activates the no interaction UI.
+    /// </summary>
     public void NoInteractionUI()
     {
         ClearAllUI();

@@ -6,6 +6,10 @@ using Mirror;
 
 public class GameExitManager : MonoBehaviour
 {
+    /// <summary>
+    /// Called when the exit button is clicked.
+    /// Stops the server or client and returns to the StarterMenu scene.
+    /// </summary>
     public void OnExitButtonClicked()
     {
         if (NetworkServer.active && NetworkClient.isConnected) // Si c'est l'hôte

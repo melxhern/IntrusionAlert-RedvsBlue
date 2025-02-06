@@ -5,7 +5,10 @@ using Mirror;
 
 public class PlayerNetworkRelay : NetworkBehaviour
 {
-
+    /// <summary>
+    /// Command to activate the antivirus on a specified computer.
+    /// </summary>
+    /// <param name="computerNetId">The network ID of the computer to activate the antivirus on.</param>
     [Command]
     public void CmdActivateAntivirus(uint computerNetId)
     {

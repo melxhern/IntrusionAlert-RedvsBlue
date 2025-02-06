@@ -67,16 +67,26 @@ public class SettingsUI : MonoBehaviour
     //     }
     // }
 
+    // Close the settings UI with a delay
     public virtual void Close()
-    {
+    {   
+        // Start the coroutine to close the UI after a delay
         StartCoroutine(CloseAfterDelay());
     }
 
+    // Coroutine to handle the delayed closing of the settings UI
     private IEnumerator CloseAfterDelay()
     {
+        // Trigger the close animation
         animator.SetTrigger("close");
+
+        // Wait for the animation to complete
         yield return new WaitForSeconds(0.5f);
+
+        // Deactivate the game object
         gameObject.SetActive(false);
+
+        // Reset the close trigger
         animator.ResetTrigger("close");
     }
 }

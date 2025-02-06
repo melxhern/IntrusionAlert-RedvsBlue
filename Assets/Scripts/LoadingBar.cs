@@ -17,7 +17,9 @@ public class LoadingBar : MonoBehaviour
     public GameObject currentCanvas; // Canvas ou GameObject activé
 
 
-    // Use this for initialization
+    /// <summary>
+    /// Use this for initialization.
+    /// </summary>
     void Start()
     {
         rectComponent = GetComponent<RectTransform>();
@@ -25,6 +27,9 @@ public class LoadingBar : MonoBehaviour
         imageComp.fillAmount = 0.0f;
     }
 
+    /// <summary>
+    /// Update is called once per frame.
+    /// </summary>
     void Update()
     {
 
@@ -41,6 +46,9 @@ public class LoadingBar : MonoBehaviour
         }
     }
 
+    /// <summary>
+    /// Called when the loading bar is complete.
+    /// </summary>
     public void OnComplete()
     {
         canvasToShow.SetActive(true);
@@ -82,6 +90,9 @@ public class LoadingBar : MonoBehaviour
 
     }
 
+    /// <summary>
+    /// Deactivate the loading bar.
+    /// </summary>
     public void Deactivate()
     {
         imageComp.fillAmount = 0.0f;

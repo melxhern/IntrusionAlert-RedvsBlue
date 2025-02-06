@@ -57,6 +57,10 @@ public class AntivirusManager : NetworkBehaviour
         }
     }
 
+    /// <summary>
+    /// Server-side method to activate antivirus on a specified computer.
+    /// </summary>
+    /// <param name="computerNetId">The network ID of the computer to activate the antivirus on.</param>
     [Server]
     public void ServerActivateAntivirus(uint computerNetId)
     {
@@ -108,6 +112,11 @@ public class AntivirusManager : NetworkBehaviour
         //RpcUpdateAntivirusStatus(computerNetId, expirationTime);
     }
 
+    /// <summary>
+    /// Client-side method to update the antivirus status.
+    /// </summary>
+    /// <param name="computerNetId">The network ID of the computer.</param>
+    /// <param name="expirationTime">The expiration time of the antivirus.</param>
     [ClientRpc]
     private void RpcUpdateAntivirusStatus(uint computerNetId, float expirationTime)
     {
@@ -123,6 +132,8 @@ public class AntivirusManager : NetworkBehaviour
     /// <summary>
     /// Vérifie si un ordinateur est protégé.
     /// </summary>
+    /// <param name="computer">The computer GameObject.</param>
+    /// <returns>True if the computer is protected, otherwise false.</returns>
     private bool IsComputerProtected(GameObject computer)
     {
         NetworkIdentity identity = computer.GetComponent<NetworkIdentity>();
@@ -222,6 +233,8 @@ public class AntivirusManager : NetworkBehaviour
     /// <summary>
     /// Formate le temps en minutes:secondes.
     /// </summary>
+    /// <param name="timeInSeconds">The time in seconds to format.</param>
+    /// <returns>A formatted time string.</returns>
     private string FormatTime(float timeInSeconds)
     {
         int minutes = Mathf.FloorToInt(timeInSeconds / 60);

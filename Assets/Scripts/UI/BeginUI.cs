@@ -24,13 +24,19 @@ public class BeginUI : MonoBehaviour
         GameManager.OnGameStarted -= OnGameStart;
     }
 
-
+    /// <summary>
+    /// Called when the game starts.
+    /// Initializes the UI.
+    /// </summary>
     private void OnGameStart()
     {
         StartCoroutine(InitializeUI());
     }
 
-
+    /// <summary>
+    /// Coroutine to initialize the UI.
+    /// Waits for a short delay to ensure SyncVars are propagated.
+    /// </summary>
     private IEnumerator InitializeUI()
     {
         // Attends un court délai pour que les SyncVars soient propagées
@@ -51,6 +57,9 @@ public class BeginUI : MonoBehaviour
         StartCoroutine(WaitAndShowPanel(4f));
     }
 
+    /// <summary>
+    /// Coroutine to fade out the UI.
+    /// </summary>
     private IEnumerator DoFade()
     {
         yield return new WaitForSeconds(2);
@@ -67,6 +76,10 @@ public class BeginUI : MonoBehaviour
         Group.interactable = false;
     }
 
+    /// <summary>
+    /// Coroutine to wait and show the panel.
+    /// </summary>
+    /// <param name="waitTime">The time to wait before showing the panel.</param>
     private IEnumerator WaitAndShowPanel(float waitTime)
     {
         yield return new WaitForSeconds(waitTime);

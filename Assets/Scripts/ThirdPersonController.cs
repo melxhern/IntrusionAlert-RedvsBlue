@@ -110,10 +110,12 @@ namespace StarterAssets
         [Command(requiresAuthority = false)]
         public void CmdUpdateIsHoldingKey(bool value)
         {
+            // Update the IsHoldingKey variable and call the RpcUpdateIsHoldingKey method
             IsHoldingKey = value;
             RpcUpdateIsHoldingKey(value);
         }
 
+        // Update the visibility of the personal USB key
         [ClientRpc]
         private void RpcUpdateIsHoldingKey(bool value)
         {
@@ -172,7 +174,7 @@ namespace StarterAssets
 
 
 
-
+        // Initialize the personal USB key and hide it
         private void Awake()
         {
             string path = "Skeleton/Hips/Spine/Chest/UpperChest/Right_Shoulder/Right_UpperArm/Right_LowerArm/Right_Hand/USBKey_Red";
@@ -190,6 +192,7 @@ namespace StarterAssets
 
         }
 
+        // Initialize various components and settings at the start of the game
         IEnumerator Start()
         {
             _cinemachineTargetYaw = CinemachineCameraTarget.transform.rotation.eulerAngles.y;
@@ -228,6 +231,7 @@ namespace StarterAssets
 
         #region MOVEMENT
 
+        // Update the player's state each frame
         private void Update()
         {
             if (!isLocalPlayer) return;
@@ -239,6 +243,7 @@ namespace StarterAssets
             Move();
         }
 
+        // Update the camera's rotation each frame
         private void LateUpdate()
         {
             if (!isLocalPlayer || !_mainCamera) return;
@@ -247,7 +252,7 @@ namespace StarterAssets
 
         }
 
-
+        // Enable player input when the player gains authority
         public override void OnStartAuthority()
         {
             base.OnStartAuthority();
@@ -255,6 +260,7 @@ namespace StarterAssets
             playerInput.enabled = true;
         }
 
+        // Assign animation IDs for various animations
         private void AssignAnimationIDs()
         {
             _animIDSpeed = Animator.StringToHash("Speed");
@@ -264,6 +270,7 @@ namespace StarterAssets
             _animIDMotionSpeed = Animator.StringToHash("MotionSpeed");
         }
 
+        // Check if the player is grounded and update the animator if using character
         private void GroundedCheck()
         {
             // set sphere position, with offset
@@ -279,6 +286,7 @@ namespace StarterAssets
             }
         }
 
+        // Update the camera's rotation and position
         private void CameraRotation()
         {
             if (!isLocalPlayer || !_mainCamera) return; //CinemachineCameraTarget
@@ -318,6 +326,7 @@ namespace StarterAssets
             */
         }
 
+        // Handle the player's movement
         private void Move()
         {
             // set target speed based on move speed, sprint speed and if sprint is pressed
@@ -386,6 +395,7 @@ namespace StarterAssets
             }
         }
 
+        // Handling jumping and gravity
         private void JumpAndGravity()
         {
             if (Grounded)
@@ -455,6 +465,7 @@ namespace StarterAssets
             }
         }
 
+        // Clamp an angle between the specified float and maximum values
         private static float ClampAngle(float lfAngle, float lfMin, float lfMax)
         {
             if (lfAngle < -360f) lfAngle += 360f;
@@ -462,6 +473,7 @@ namespace StarterAssets
             return Mathf.Clamp(lfAngle, lfMin, lfMax);
         }
 
+        // Draw gizmos for the grounded check
         private void OnDrawGizmosSelected()
         {
             Color transparentGreen = new Color(0.0f, 1.0f, 0.0f, 0.35f);
@@ -476,6 +488,7 @@ namespace StarterAssets
                 GroundedRadius);
         }
 
+        // Play footstep audio
         private void OnFootstep(AnimationEvent animationEvent)
         {
             if (animationEvent.animatorClipInfo.weight > 0.5f)
@@ -488,6 +501,7 @@ namespace StarterAssets
             }
         }
 
+        // Play landing audio
         private void OnLand(AnimationEvent animationEvent)
         {
             if (animationEvent.animatorClipInfo.weight > 0.5f)
@@ -497,6 +511,8 @@ namespace StarterAssets
         }
 
         #endregion
+
+        // Command to pick up the USB key
         [Command(requiresAuthority = false)]
         public void CmdPickUpUSBKey(uint netId)
         {
@@ -506,6 +522,7 @@ namespace StarterAssets
 
         }
 
+        // Destroy the object with the specified network ID
         [ClientRpc]
         private void RpcDestroyObject(uint netId)
         {
@@ -514,17 +531,17 @@ namespace StarterAssets
         }
 
         #region ROLES
-
-
+        // Get the player's role
+        public PlayerRole GetRole()
+        {
+            return Role;
+        }
 
 
 
 
         #endregion
 
-        public PlayerRole GetRole()
-        {
-            return Role;
-        }
+
     }
 }

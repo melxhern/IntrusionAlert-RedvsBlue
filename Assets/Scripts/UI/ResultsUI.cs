@@ -9,6 +9,10 @@ public class ResultsUI : MonoBehaviour
 {
     [SerializeField] private TextMeshProUGUI resultText; // Texte pour le résultat
 
+    /// <summary>
+    /// Start is called before the first frame update.
+    /// Displays the game result based on the player's role and the winning team.
+    /// </summary>
     private void Start()
     {
         // Récupérer l'équipe gagnante

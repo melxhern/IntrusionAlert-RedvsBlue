@@ -19,6 +19,11 @@ public class GameResultManager : NetworkBehaviour
     [SerializeField] private TextMeshProUGUI resultText; // Texte affiché sur le Canvas pour le résultat
     [SerializeField] private GameObject resultCanvas;   // Canvas à afficher
 
+
+    /// <summary>
+    /// Start is called before the first frame update.
+    /// Hides the result canvas at the beginning.
+    /// </summary>
     private void Start()
     {
         if (resultCanvas != null)
@@ -27,6 +32,9 @@ public class GameResultManager : NetworkBehaviour
         }
     }
 
+    /// <summary>
+    /// Checks if all computers in the scene are hacked.
+    /// </summary>
     public void CheckIfAllComputersHacked()
     {
         // Récupère tous les ordinateurs de la scène
@@ -118,6 +126,9 @@ public class GameResultManager : NetworkBehaviour
     //     Debug.Log($"L'équipe gagnante est : {winningTeam}");
     // }
 
+    /// <summary>
+    /// Checks the game result based on the status of all computers.
+    /// </summary>
     public void CheckGameResult()
     {
         //Debug.Log("is server dans check game result" + isServer);
@@ -148,7 +159,10 @@ public class GameResultManager : NetworkBehaviour
         DisplayResult(winningTeam);
     }
 
-
+    /// <summary>
+    /// Displays the result of the game.
+    /// </summary>
+    /// <param name="winningTeam">The team that won the game.</param>
     private void DisplayResult(PlayerRole winningTeam)
     {
         // Sauvegarder l'équipe gagnante pour la scène "Results"
@@ -168,7 +182,9 @@ public class GameResultManager : NetworkBehaviour
         RpcLoadResultsScene();
     }
 
-    // RPC pour charger la scène "Results" sur tous les clients
+    /// <summary>
+    /// RPC to load the "Results" scene on all clients.
+    /// </summary>
     [ClientRpc]
     private void RpcLoadResultsScene()
     {

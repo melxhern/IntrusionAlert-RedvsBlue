@@ -11,18 +11,30 @@ public class GameTimer : MonoBehaviour
 
     private bool isGameStarted = false;
 
+    /// <summary>
+    /// Start is called before the first frame update.
+    /// Subscribes to the OnGameStarted event of the GameManager.
+    /// </summary>
     private void Start()
     {
         // Abonne-toi à l'événement OnGameStarted du GameManager
         Assets.Scripts.GameManager.OnGameStarted += StartTimer;
     }
 
+    /// <summary>
+    /// OnDestroy is called when the script is destroyed.
+    /// Unsubscribes from the OnGameStarted event to avoid errors.
+    /// </summary>
     private void OnDestroy()
     {
         // Désabonne-toi de l'événement pour éviter les erreurs
         Assets.Scripts.GameManager.OnGameStarted -= StartTimer;
     }
 
+    /// <summary>
+    /// Update is called once per frame.
+    /// Updates the timer if the game has started and time is remaining.
+    /// </summary>
     private void Update()
     {
         if (isGameStarted && timeRemaining > 0)
@@ -32,11 +44,17 @@ public class GameTimer : MonoBehaviour
         }
     }
 
+    /// <summary>
+    /// Starts the timer when the game starts.
+    /// </summary>
     private void StartTimer()
     {
         isGameStarted = true; // Démarre le timer lorsque la partie commence
     }
 
+    /// <summary>
+    /// Updates the timer UI.
+    /// </summary>
     private void UpdateTimerUI()
     {
         int minutes = Mathf.FloorToInt(timeRemaining / 60);

@@ -24,7 +24,10 @@ namespace Assets.Scripts
 
         private List<ThirdPersonController> _players = new List<ThirdPersonController>();
 
-        // Use this for initialization
+        /// <summary>
+        /// Use this for initialization.
+        /// Registers the StartGameMessage handler and waits for the server to be active.
+        /// </summary>
         IEnumerator Start()
         {
             NetworkClient.RegisterHandler<StartGameMessage>(OnStartGameReceived);
@@ -48,11 +51,19 @@ namespace Assets.Scripts
             //}
         }
 
+        /// <summary>
+        /// Handler for the StartGameMessage.
+        /// Invokes the OnGameStarted action.
+        /// </summary>
         private void OnStartGameReceived(StartGameMessage obj)
         {
             OnGameStarted?.Invoke();
         }
 
+        /// <summary>
+        /// Adds a player to the list of players.
+        /// </summary>
+        /// <param name="player">The player to add.</param>
         public void AddPlayer(ThirdPersonController player)
         {
             _players.Add(player);

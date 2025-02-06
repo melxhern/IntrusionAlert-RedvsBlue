@@ -16,7 +16,10 @@ public class Computer : NetworkBehaviour
     [SyncVar]
     public List<string> events = new List<string>();
 
-
+    /// <summary>
+    /// Opens the UI for the computer based on the player's role and the computer's status.
+    /// </summary>
+    /// <param name="player">The player interacting with the computer.</param>
     public void OpenUI(GameObject player)
     {
         Debug.Log("Current status: " + currentStatus);
@@ -80,12 +83,18 @@ public class Computer : NetworkBehaviour
 
     }
 
+    /// <summary>
+    /// Command to set the computer's status to being protected.
+    /// </summary>
     [Command(requiresAuthority = false)]
     public void CmdProtectComputer()
     {
         currentStatus = 1;
     }
 
+    /// <summary>
+    /// Command to set the computer's status to protected.
+    /// </summary>
     [Command(requiresAuthority = false)]
     public void CmdComputerProtected()
     {
@@ -98,6 +107,9 @@ public class Computer : NetworkBehaviour
 
     }
 
+    /// <summary>
+    /// Command to set the computer's status to being pirated.
+    /// </summary>
     [Command(requiresAuthority = false)]
     public void CmdPirateComputer()
     {
@@ -109,6 +121,9 @@ public class Computer : NetworkBehaviour
         events.Add("Suspicious USB blocked at " + System.TimeSpan.FromSeconds(NetworkTime.time).ToString(@"hh\:mm\:ss"));
     }
 
+    /// <summary>
+    /// Command to set the computer's status to pirated.
+    /// </summary>
     [Command(requiresAuthority = false)]
     public void CmdComputerPirated()
     {
@@ -127,12 +142,19 @@ public class Computer : NetworkBehaviour
 
     }
 
+    /// <summary>
+    /// Command to stop the protection of the computer.
+    /// </summary>
     [Command(requiresAuthority = false)]
     public void CmdStopProtection()
     {
         currentStatus = 0;
     }
 
+    /// <summary>
+    /// Command to add an event to the computer's event list.
+    /// </summary>
+    /// <param name="eventText">The event text to add.</param>
     [Command(requiresAuthority = false)]
     public void CmdAddEvent(string eventText)
     {
