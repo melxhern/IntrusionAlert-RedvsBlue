@@ -1,4 +1,3 @@
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using Mirror;
@@ -27,17 +26,11 @@ public class Computer : NetworkBehaviour
         {
             CmdStopProtection();
         }
-        //else if (currentStatus == 1 || currentStatus == -1)
-        //{
-        //    CmdStopProtection();
-        //}
-
-
 
         var thirdPersonController = player.GetComponent<ThirdPersonController>();
         var role = thirdPersonController.GetRole();
         var computerUI = Resources.FindObjectsOfTypeAll<GameObject>()
-            .FirstOrDefault(obj => obj.name == "computerUI"); // permet de trouver l'objet m�me si d�sactiv�
+            .FirstOrDefault(obj => obj.name == "computerUI"); // permet de trouver l'objet meme si désactivé
         if (computerUI == null)
         {
             Debug.LogError("L'UI AntivirusMissionUI est introuvable !");
@@ -47,7 +40,6 @@ public class Computer : NetworkBehaviour
 
         if (currentStatus == -2)
         {
-            Debug.Log("Hacked UI" + currentStatus);
             computerUIManager.HackedUI();
             return;
         }
@@ -55,8 +47,6 @@ public class Computer : NetworkBehaviour
 
         if (role == PlayerRole.BlueTeam)
         {
-            Debug.Log("end of protection time: " + endOfProtectionTime);
-            Debug.Log("network time: " + NetworkTime.time);
             if (endOfProtectionTime > NetworkTime.time)
             {
                 computerUIManager.ProtectedUI(gameObject, endOfProtectionTime);
@@ -68,7 +58,6 @@ public class Computer : NetworkBehaviour
         }
         else if (role == PlayerRole.RedTeam)
         {
-            Debug.Log("role : " + role);
             if (thirdPersonController.IsHoldingKey)
             {
                 computerUIManager.HackStartUI(endOfProtectionTime > NetworkTime.time);
@@ -76,7 +65,6 @@ public class Computer : NetworkBehaviour
             }
             else
             {
-                Debug.Log("No interaction UI");
                 computerUIManager.NoInteractionUI();
             }
         }
@@ -102,7 +90,6 @@ public class Computer : NetworkBehaviour
         {
             endOfProtectionTime = NetworkTime.time + 60;
             currentStatus = 2;
-            Debug.Log("Computer protected by server !!!!!");
         }
 
     }
@@ -127,7 +114,6 @@ public class Computer : NetworkBehaviour
     [Command(requiresAuthority = false)]
     public void CmdComputerPirated()
     {
-        Debug.Log("Value of current Status" + currentStatus);
         if (currentStatus != 2)
         {
             currentStatus = -2;
@@ -136,7 +122,6 @@ public class Computer : NetworkBehaviour
         var gameResultManager = FindObjectOfType<GameResultManager>();
         if (gameResultManager != null)
         {
-            Debug.Log("Checking if all computers are hacked");
             gameResultManager.CheckIfAllComputersHacked();
         }
 

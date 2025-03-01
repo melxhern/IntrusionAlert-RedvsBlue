@@ -1,8 +1,6 @@
 using Assets.Scripts;
 using StarterAssets;
-using System;
 using System.Collections;
-using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 
@@ -45,8 +43,6 @@ public class BeginUI : MonoBehaviour
         //Panel.SetActive(false);
         ThirdPersonController player = ThirdPersonController.Local;
         RoleText.text = $"Vous êtes {player.Role.ToString().ToLower()}";
-
-        // Panel.SetActive(true);
 
         if (player.Role == PlayerRole.BlueTeam) Postit.text = "Votre rôle: protéger le réseau interne, \nVotre mission: vérifier et mettre en place les firewalls";
 

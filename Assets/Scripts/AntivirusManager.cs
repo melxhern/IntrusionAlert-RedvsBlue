@@ -1,7 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.UI;
 using TMPro;
 using Mirror;
 using System;
@@ -46,8 +45,6 @@ public class AntivirusManager : NetworkBehaviour
             var playerRelay = NetworkClient.localPlayer.GetComponent<PlayerNetworkRelay>();
             if (playerRelay != null)
             {
-                Debug.Log($"Activation de l'antivirus sur l'ordinateur {selectedComputer.name} (ID {computerIdentity.netId}).");
-
                 playerRelay.CmdActivateAntivirus(computerIdentity.netId); // Utilisation de netId
             }
         }
@@ -65,51 +62,21 @@ public class AntivirusManager : NetworkBehaviour
     public void ServerActivateAntivirus(uint computerNetId)
     {
 
-        Debug.Log($"ServerActivateAntivirus: {computerNetId}");
         float expirationTime = Time.time + antivirusDuration;
-        Debug.Log("expirationTime: " + expirationTime);
-        //Debug.Log("is it local player ? " + isLocalPlayer);
-        Debug.Log("networkServer.active: " + NetworkServer.active);
 
-
-        //Debug.Log("is it server ? " + isServer);
         try
         {
-            Debug.Log("syncedAntivirusData.Count: " + syncedAntivirusData.Count);
             AntivirusData newAntivirusData = new AntivirusData
             {
                 computerNetId = computerNetId,
                 expirationTime = expirationTime
             };
-            Debug.Log("newAntivirusData.computerNetId: " + newAntivirusData.computerNetId);
-            Debug.Log("newAntivirusData.expirationTime: " + newAntivirusData.expirationTime);
             syncedAntivirusData.Add(newAntivirusData);
-            Debug.Log("syncedAntivirusData.Count: " + syncedAntivirusData.Count);
-            //Debug.Log("is server ? " + isServer);
         }
         catch (Exception e)
         {
             Debug.Log("Exception: " + e);
         }
-        // if (isServer)
-        // {
-        //     Debug.Log("it is indeed server");
-        //     Debug.Log("syncedAntivirusData.Count: " + syncedAntivirusData.Count);
-        //     Debug.Log("computerNetId: " + computerNetId);
-        //     Debug.Log("expirationTime: " + expirationTime);
-        //     AntivirusData newAntivirusData = new AntivirusData
-        //     {
-        //         computerNetId = computerNetId,
-        //         expirationTime = expirationTime
-        //     };
-        //     Debug.Log("newAntivirusData.computerNetId: " + newAntivirusData.computerNetId);
-        //     Debug.Log("newAntivirusData.expirationTime: " + newAntivirusData.expirationTime);
-        //     syncedAntivirusData.Add(newAntivirusData);
-        //     Debug.Log("syncedAntivirusData.Count: " + syncedAntivirusData.Count);
-        // }
-
-        Debug.Log("syncedAntivirusData.Count: " + syncedAntivirusData.Count);
-        //RpcUpdateAntivirusStatus(computerNetId, expirationTime);
     }
 
     /// <summary>
@@ -120,7 +87,6 @@ public class AntivirusManager : NetworkBehaviour
     [ClientRpc]
     private void RpcUpdateAntivirusStatus(uint computerNetId, float expirationTime)
     {
-        Debug.Log("on est dans RpcUpdateAntivirusStatus");
         if (!activeAntivirus.ContainsKey(computerNetId))
         {
             activeAntivirus[computerNetId] = expirationTime;

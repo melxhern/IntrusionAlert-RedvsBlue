@@ -1,8 +1,6 @@
-using System.Collections;
-using System.Collections.Generic;
+
 using UnityEngine;
 using TMPro;
-using System;
 
 public class GameTimer : MonoBehaviour
 {
@@ -17,7 +15,7 @@ public class GameTimer : MonoBehaviour
     /// </summary>
     private void Start()
     {
-        // Abonne-toi à l'événement OnGameStarted du GameManager
+        // Abonne à l'événement OnGameStarted du GameManager
         Assets.Scripts.GameManager.OnGameStarted += StartTimer;
     }
 
@@ -27,7 +25,7 @@ public class GameTimer : MonoBehaviour
     /// </summary>
     private void OnDestroy()
     {
-        // Désabonne-toi de l'événement pour éviter les erreurs
+        // Désabonne de l'événement pour éviter les erreurs
         Assets.Scripts.GameManager.OnGameStarted -= StartTimer;
     }
 
@@ -73,7 +71,6 @@ public class GameTimer : MonoBehaviour
         if (timeRemaining <= 0)
         {
             timeRemaining = 0;
-            Debug.Log("Time has run out!");
 
             // Appelle le GameResultManager pour vérifier le résultat
             var gameResultManager = FindObjectOfType<GameResultManager>();

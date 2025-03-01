@@ -1,8 +1,6 @@
-using System.Collections;
-using System.Collections.Generic;
+
 using UnityEngine;
 using TMPro;
-using Mirror;
 using StarterAssets;
 
 public class ResultsUI : MonoBehaviour
@@ -18,9 +16,6 @@ public class ResultsUI : MonoBehaviour
         // Récupérer l'équipe gagnante
         PlayerRole winningTeam = GameInfo.Instance.WinningTeam;
         PlayerRole playerRole = GameInfo.Instance.PlayerRole;
-
-        Debug.Log($"L'équipe gagnante est : {winningTeam}");
-
 
         // Afficher le message de victoire ou de défaite
         if (playerRole == winningTeam)

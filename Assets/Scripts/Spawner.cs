@@ -1,5 +1,4 @@
-using System.Collections;
-using System.Collections.Generic;
+
 using UnityEngine;
 using Mirror;
 
@@ -18,31 +17,9 @@ public class Spawner : NetworkBehaviour
             Debug.LogWarning("Spawner: This script should only be executed on the server.");
             return;
         }
-
-
         //SpawnGameManager();
         SpawnUSBKeysOnTables();
     }
-
-    /// <summary>
-    /// Spawne le GameManager côté serveur si le prefab est assigné.
-    /// </summary>
-    // void SpawnGameManager()
-    // {
-    //     if (gameManagerPrefab != null)
-    //     {
-    //         GameObject gameManagerInstance = Instantiate(gameManagerPrefab);
-
-    //         // Spawner sur le réseau
-    //         NetworkServer.Spawn(gameManagerInstance);
-
-    //         Debug.Log("GameManager spawned on the server!");
-    //     }
-    //     else
-    //     {
-    //         Debug.LogError("Spawner: GameManager prefab is not assigned in the Inspector!");
-    //     }
-    // }
 
     /// <summary>
     /// Spawne des clés USB aléatoirement sur les tables de la scène.
@@ -50,15 +27,11 @@ public class Spawner : NetworkBehaviour
     [Server]
     void SpawnUSBKeysOnTables()
     {
-        Debug.LogError("AHHH");
-
         if (usbKeyPrefab == null)
         {
             Debug.LogError("Spawner: USB Key prefab is not assigned in the Inspector!");
             return;
         }
-
-
 
         // Recherche toutes les tables dans la scène
         GameObject[] tables = GameObject.FindGameObjectsWithTag("Table");
@@ -68,8 +41,6 @@ public class Spawner : NetworkBehaviour
             Debug.LogWarning("Spawner: No tables found in the scene!");
             return;
         }
-
-        Debug.Log($"Spawner: Found {tables.Length} tables in the scene.");
 
         foreach (GameObject table in tables)
         {
@@ -84,8 +55,6 @@ public class Spawner : NetworkBehaviour
                 usbKeyInstance.tag = "MalwareKey";
                 NetworkServer.Spawn(usbKeyInstance);
                 RpcMirrorUSBKey(usbKeyInstance.GetComponent<NetworkIdentity>());
-
-                Debug.Log($"Spawner: Spawned USB Key at {spawnPosition} on table {table.name}.");
             }
         }
     }

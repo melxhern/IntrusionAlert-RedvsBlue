@@ -1,5 +1,4 @@
-using System.Collections;
-using System.Collections.Generic;
+
 using UnityEngine;
 using TMPro;
 
@@ -40,7 +39,6 @@ public class AntivirusTimer : MonoBehaviour
                 timeRemaining = 0;
                 isTimerActive = false;
                 UpdateTimerUI(timeRemaining);
-                Debug.Log("Antivirus protection time has expired!");
             }
         }
     }

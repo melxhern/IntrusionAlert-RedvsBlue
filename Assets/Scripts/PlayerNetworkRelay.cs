@@ -1,5 +1,4 @@
-using System.Collections;
-using System.Collections.Generic;
+
 using UnityEngine;
 using Mirror;
 
@@ -18,7 +17,6 @@ public class PlayerNetworkRelay : NetworkBehaviour
             return;
         }
 
-        Debug.Log($"CmdActivateAntivirus: {computerNetId}");
         AntivirusManager antivirusManager = FindObjectOfType<AntivirusManager>();
         if (antivirusManager == null)
         {

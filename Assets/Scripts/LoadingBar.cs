@@ -1,14 +1,11 @@
-﻿using System.Collections;
-using System.Collections.Generic;
+﻿
 using UnityEngine;
 using UnityEngine.UI;
-using System.Linq;
 using StarterAssets;
 using Mirror;
 
 public class LoadingBar : MonoBehaviour
 {
-
     private RectTransform rectComponent;
     private Image imageComp;
     public float speed = 0.0f;
@@ -36,13 +33,11 @@ public class LoadingBar : MonoBehaviour
         if (imageComp.fillAmount != 1f)
         {
             imageComp.fillAmount = imageComp.fillAmount + Time.deltaTime * speed;
-
         }
         else
         {
             imageComp.fillAmount = 0.0f;
             OnComplete();
-
         }
     }
 
@@ -71,7 +66,6 @@ public class LoadingBar : MonoBehaviour
         if (currentComputer.currentStatus == -1)
         {
             currentComputer.CmdComputerPirated();
-            Debug.Log("Computer pirated");
             var player = NetworkClient.localPlayer?.gameObject.GetComponent<ThirdPersonController>();
             if (player != null)
             {
@@ -85,9 +79,7 @@ public class LoadingBar : MonoBehaviour
         else if (currentComputer.currentStatus != 2)
         {
             currentComputer.CmdComputerProtected();
-            Debug.Log("Computer protected");
         }
-
     }
 
     /// <summary>
