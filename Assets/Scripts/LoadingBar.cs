@@ -10,8 +10,8 @@ public class LoadingBar : MonoBehaviour
     private Image imageComp;
     public float speed = 0.0f;
 
-    public GameObject canvasToShow; // Canvas ou GameObject à activer
-    public GameObject currentCanvas; // Canvas ou GameObject activé
+    public GameObject canvasToShow; // Canvas à activer
+    public GameObject currentCanvas; // Canvas actuellement activé
 
 
     /// <summary>

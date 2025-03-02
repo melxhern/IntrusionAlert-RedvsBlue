@@ -51,9 +51,7 @@ public class LobbyManager : NetworkBehaviour
         {
             StartGameButton = GameObject.Find("ReadyButton")?.GetComponent<Button>();
         }
-
-        if (StartGameButton != null)
-        {
+        else {
             StartGameButton.gameObject.SetActive(NetworkClient.active);
         }
     }

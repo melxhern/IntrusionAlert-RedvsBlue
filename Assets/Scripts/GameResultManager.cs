@@ -1,6 +1,5 @@
 
 using UnityEngine;
-using TMPro;
 using Mirror;
 using StarterAssets;
 using UnityEngine.SceneManagement;
@@ -12,22 +11,6 @@ public static class GameResultData
 
 public class GameResultManager : NetworkBehaviour
 {
-    [SerializeField] private TextMeshProUGUI resultText; // Texte affiché sur le Canvas pour le résultat
-    [SerializeField] private GameObject resultCanvas;   // Canvas à afficher
-
-
-    /// <summary>
-    /// Start is called before the first frame update.
-    /// Hides the result canvas at the beginning.
-    /// </summary>
-    private void Start()
-    {
-        if (resultCanvas != null)
-        {
-            resultCanvas.SetActive(false); // Cache le Canvas au début
-        }
-    }
-
     /// <summary>
     /// Checks if all computers in the scene are hacked.
     /// </summary>
@@ -118,6 +101,4 @@ public class GameResultManager : NetworkBehaviour
     {
         SceneManager.LoadScene("Results");
     }
-
-
 }

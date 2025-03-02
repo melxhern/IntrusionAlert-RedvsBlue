@@ -4,11 +4,10 @@ using UnityEngine.InputSystem; // Nécessaire pour le nouveau système d'entrée
 using Mirror;
 using StarterAssets;
 
-
 public class InteractMissionObject : NetworkBehaviour
 {
     public float detectionRadius = 0.1f; // Rayon de détection
-    public string missionObjectTag = "MissionObject"; // Tag des objets détectables
+    public string missionObjectTag = "MissionObject"; // Tag des objets détectables (computers)
     public string keyTag = "MalwareKey";
     public GameObject antivirusMissionUI; // UI à activer
     public static GameObject currentMissionObject = null; // L'objet actuellement sélectionné
@@ -20,7 +19,6 @@ public class InteractMissionObject : NetworkBehaviour
     /// </summary>
     void Start()
     {
-
         // Désactiver le script si ce n'est pas le joueur local
         if (!isLocalPlayer)
         {
@@ -77,7 +75,6 @@ public class InteractMissionObject : NetworkBehaviour
         {
             currentMissionObject = closestObject;
             currentMissionObjectNetId = currentMissionObject.GetComponent<NetworkIdentity>().netId;
-
             var outline = currentMissionObject.GetComponent<Outline>();
 
             if (outline == null)
@@ -115,9 +112,7 @@ public class InteractMissionObject : NetworkBehaviour
                     Debug.LogWarning("Le composant 'Computer' est manquant sur l'objet actuel.");
                 }
             }
-
         }
-
     }
 
     /// <summary>

@@ -91,7 +91,6 @@ public class AntivirusManager : NetworkBehaviour
         {
             activeAntivirus[computerNetId] = expirationTime;
         }
-
         UpdateUI();
     }
 

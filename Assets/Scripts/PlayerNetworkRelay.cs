@@ -26,7 +26,4 @@ public class PlayerNetworkRelay : NetworkBehaviour
 
         antivirusManager.ServerActivateAntivirus(computerNetId);
     }
-
-
-
 }
