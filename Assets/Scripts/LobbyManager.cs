@@ -8,6 +8,10 @@ public class LobbyManager : NetworkBehaviour
     public Button StartGameButton;
     private static List<PlayerReady> playersList = new List<PlayerReady>();
 
+    /// <summary>
+    /// Register player in lobby
+    /// </summary>
+    /// <param name="player"></param>
     public static void RegisterPlayer(PlayerReady player)
     {
         if (player == null)
@@ -21,6 +25,10 @@ public class LobbyManager : NetworkBehaviour
         }
     }
 
+    /// <summary>
+    /// When server is destroyed or player is disconnected, remove player from list
+    /// </summary>
+    /// <param name="player"></param>
     public static void UnregisterPlayer(PlayerReady player)
     {
         if (playersList.Contains(player))

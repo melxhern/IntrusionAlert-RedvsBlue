@@ -23,7 +23,6 @@ public class PlayerNetworkRelay : NetworkBehaviour
             Debug.LogError("AntivirusManager not found!");
             return;
         }
-
         antivirusManager.ServerActivateAntivirus(computerNetId);
     }
 }
